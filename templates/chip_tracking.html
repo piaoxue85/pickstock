@@ -1,0 +1,57 @@
+{% extends "base_new.html" %}
+
+
+{% block content %}
+<!-- jQuery (necessary for Highchart & Bootstrap's JavaScript plugins) -->
+{% load staticfiles %}
+<script src="{% static "js/highstock-2.0.1/highstock.js" %}"></script>
+
+<!-- 標題 -->
+<div class="container" style="width:80%">
+	<div class="page-header">
+	  <h3 style="text-align:center">{{table_title}} <small>近5年大戶籌碼變化</small></h3>
+	</div>
+</div><!-- /標題 -->
+
+<!-- 切換頁籤 -->
+<div class="container" style="width:80%">
+	<ul class="nav nav-tabs">
+		<li class="active" id="bigchip_tracking"><a data-toggle="tab">大戶籌碼變化</a></li>
+		<!-- <li id="#"><a data-toggle="tab">籌碼分析(開發中)</a></li>
+		<li id="#"><a data-toggle="tab">籌碼分析(開發中)</a></li> -->
+	</ul>
+</div><!-- /切換頁籤 -->
+
+<!-- Highchart圖表顯示區 -->
+<div class="container" id="chart" style="width:80%; height:400px;"></div>
+
+<!-- 表格顯示區 -->
+<div class="container" id="table" style="width:81%">
+	<div class="panel-body">
+		<table class="table table-hover table-condensed table-bordered table table-striped">
+			<thead>
+				<tr class="info">
+					<th class="text-center">日期 / 項目 </th>
+					<th class="text-center">開盤價</th>
+					<th class="text-center">最高價</th>
+					<th class="text-center">最低價</th>
+					<th class="text-center">收盤價</th>
+					<th class="text-center">大戶人數</th>
+					<th class="text-center">持有張數</th>
+					<th class="text-center">持有比率</th>
+					<th class="text-center">張數增減</th>
+				</tr>
+			</thead>
+			<tbody id="price_chip_data">
+			</tbody>
+		</table>
+	</div>
+</div><!-- /表格顯示區 -->
+
+{% endblock %}
+
+
+{% block footer %}
+	{% load staticfiles %}
+	<script src="{% static "chip_tracking.js" %}"></script>
+{% endblock %}

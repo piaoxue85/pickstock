@@ -1,0 +1,136 @@
+{% extends "base_new.html" %}
+
+
+{% block content %}
+<!-- jQuery (necessary for Highchart & Bootstrap's JavaScript plugins) -->
+{% load staticfiles %}
+<script src="{% static "js/highstock-2.0.1/highstock.js" %}"></script>
+
+<!-- 標題 -->
+<div class="container" style="width:94%">
+	<div class="page-header">
+		<blockquote>
+			<h2><span class="glyphicon glyphicon-search"></span> 挑選潛力股</h2>
+			<footer>預估方法：採用上年度同期季營收×最新月份累積營收年增率×過去4季平均營益率，搭配平均稅率算出全年EPS預估值</footer>
+			<footer>補充說明：未來預估配息將採近3年平均配息率代替；另外，等年度資料增加之後，會再納入年度條件作為篩選項目</footer>
+		</blockquote>
+	</div>
+</div><!-- /標題 -->
+
+<!-- 條件篩選 -->
+<div class="container" style="width:94%">
+	<form class="form-inline" role="form" id="fins_filiters">
+		<span class="glyphicon glyphicon-search"></span>
+		<div class="form-group" style="width:120px">
+			<label class="control-label">連續月份</label>
+			<select class="form-control" name="mth_streak">
+				<option value="0">0</option>
+				<option value="1">1</option>
+				<option value="2">2</option>
+				<option value="3" selected="selected">3</option>
+				<option value="4">4</option>
+				<option value="5">5</option>
+				<option value="6">6</option>
+			</select>
+		</div>
+		<div class="form-group" style="width:200px">
+			<div class="input-group">
+				<div class="input-group-addon">營收年增率＞</div>
+				<input type="text" class="form-control" name="salesYoY_mth_level" value="0.0">
+				<div class="input-group-addon">%</div>
+			</div>
+		</div>
+		<div class="form-group" style="width:120px">
+			<label class="control-label">連續季度</label>
+			<select class="form-control" name="qtr_streak">
+				<option value="0">0</option>
+				<option value="1">1</option>
+				<option value="2">2</option>
+				<option value="3">3</option>
+				<option value="4" selected="selected">4</option>
+				<option value="5">5</option>
+				<option value="6">6</option>
+			</select>
+		</div>
+		<div class="form-group" style="width:180px">
+			<div class="input-group">
+				<div class="input-group-addon">營益率＞</div>
+				<input type="text" class="form-control" name="opm_qtr_level" value="10.0">
+				<div class="input-group-addon">%</div>
+			</div>
+		</div>
+		<div class="form-group" style="width:160px">
+			<div class="input-group">
+				<div class="input-group-addon">EPS＞</div>
+				<input type="text" class="form-control" name="eps_qtr_level" value="0.0">
+				<div class="input-group-addon">元</div>
+			</div>
+		</div>
+		<div class="form-group" style="width:260px">
+			<div class="input-group">
+				<div class="input-group-addon">累積自由現金流＞</div>
+				<input type="text" class="form-control" name="cf_qtr_level" value="0">
+				<div class="input-group-addon">仟元</div>
+			</div>
+		</div>
+		<div class="form-group" style="width:220px">
+			<div class="input-group">
+				<div class="input-group-addon">金融負債比率＜</div>
+				<input type="text" class="form-control" name="fdebt_qtr_level" value="40.0">
+				<div class="input-group-addon">%</div>
+			</div>
+		</div>
+		<div class="form-group">
+			<button type="button" class="btn btn-primary" id="start_filter">挑股!Go</button>
+		</div>
+<!-- 		<div class="form-group" style="width:120px">
+			<label class="control-label">連續年度</label>
+			<select class="form-control" name="yr_streak">
+				<option value="1" selected="selected">1</option>
+				<option value="2">2</option>
+				<option value="3">3</option>
+				<option value="4">4</option>
+				<option value="5">5</option>
+			</select>
+		</div> -->
+	</form>
+
+<!-- 	<form id="fins_filiters">
+		連續
+		<input type="text" name="qtr_streak" value="4" size="1" min="0">季：
+		營益率高於:
+		<input type="text" name="opm_qtr_level" value="20" size="1">％,
+		EPS高於:
+		<input type="text" name="eps_qtr_level" value="0" size="1">元,
+		累積自由現金流高於:
+		<input type="text" name="cf_qtr_level" value="0" size="1">仟元,
+		金融負債比率低於:
+		<input type="text" name="fdebt_qtr_level" value="35" size="1" min="0">％,
+		連續
+		<input type="text" name="mth_streak" value="3" size="1" min="0">個月：
+		營收年增率高於:
+		<input type="text" name="salesYoY_mth_level" value="0" size="1">％,
+		連續
+		<input type="text" name="yr_streak" value="3" size="1" min="0">年：
+		<input id="start_filter" type="button" value="執行查詢"></button>
+	</form> -->
+</div><!-- /條件篩選 -->
+
+<!-- 表格顯示區 -->
+<div class="container" id="table" style="width:95%">
+	<div class="panel-body">
+		<table class="table table-hover table-condensed table-bordered table table-striped">
+			<thead id="pickstock_title">
+			</thead>
+			<tbody id="pickstock">
+			</tbody>
+		</table>
+	</div>
+</div><!-- /表格顯示區 -->
+
+{% endblock %}
+
+{% block footer %}
+	{% load staticfiles %}
+	<script src="{% static "pickstock.js" %}"></script>
+{% endblock %}

@@ -1,0 +1,64 @@
+{% extends "base_new.html" %}
+
+
+{% block content %}
+<!-- jQuery (necessary for Highchart & Bootstrap's JavaScript plugins) -->
+{% load staticfiles %}
+<script src="{% static "js/highstock-2.0.1/highstock.js" %}"></script>
+
+<!-- 標題 -->
+<div class="container" style="width:85%">
+	<div class="page-header">
+	  <h3 style="text-align:center">台灣景氣追蹤 <small>近10年加權指數河流圖與景氣指標對照</small></h3>
+	</div>
+</div><!-- /標題 -->
+
+<!-- 切換頁籤 -->
+<div class="container" style="width:85%">
+	<ul class="nav nav-tabs">
+		<li class="active" id="tw_economics_leading"><a data-toggle="tab">指標1: 領先指標年增率</a></li>
+		<li id="tw_economics_pbr"><a data-toggle="tab">指標2: 景氣對策信號分數</a></li>		
+		<li id="tw_economics_m1b"><a data-toggle="tab">指標3: 貨幣總額M1B年增率</a></li>
+	</ul>
+</div><!-- /切換頁籤 -->
+
+<!-- Highchart圖表顯示區 -->
+<div class="container" id="chart" style="width:85%; height:540px;"></div>
+
+<!-- 表格顯示區 -->
+<div class="container" id="table" style="width:86%">
+	<div class="panel-body">
+		<table class="table table-hover table-condensed table-bordered table table-striped">
+			<thead>
+				<tr class="info">
+					<th class="text-center" width="80px">日期 / 項目 </th>
+					<th class="text-center">開盤價</th>
+					<th class="text-center">最高價</th>
+					<th class="text-center">最低價</th>
+					<th class="text-center">收盤價</th>
+					<th class="text-center">PBR</th>
+					<th class="text-center">1.0x</th>
+					<th class="text-center">1.3x</th>
+					<th class="text-center">1.6x</th>
+					<th class="text-center">1.9x</th>
+					<th class="text-center">2.2x</th>
+					<th class="text-center" width="70px">景氣對策信號(分)</th>
+					<th class="text-center" width="70px">景氣領先指標(分)</th>
+					<th class="text-center" width="70px">領先指標YoY</th>
+					<th class="text-center" width="80px">貨幣總額M1B(Blns)</th>
+					<th class="text-center" width="70px">貨幣總額YoY</th>
+				</tr>
+			</thead>
+			<tbody id="tw_economics_data">
+			</tbody>
+		</table>
+	</div>
+</div><!-- /表格顯示區 -->
+
+{% endblock %}
+
+
+{% block footer %}
+	{% load staticfiles %}
+	<script src="{% static "tw_economics.js" %}"></script>
+{% endblock %}

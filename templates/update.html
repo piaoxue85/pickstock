@@ -1,0 +1,275 @@
+{% extends "base_new.html" %}
+
+{% block content %}
+	<!-- 標題 -->
+	<div class="container" style="width:95%">
+		<div class="page-header">
+			<h3 style="text-align:center">網站資料庫更新 <small><kbd>(限管理者使用)</kbd></small></h3>
+		</div>
+	</div><!-- /標題 -->
+
+	<!-- 表格顯示區 -->
+	<div class="container" style="width:95%">
+		<div class="panel-body">
+			<table class="table table-hover table-bordered">
+				<thead>
+					<tr class="info">
+						<th class="text-center" width="120px">資料表名稱</th>
+						<th class="text-center" width="100px">執行更新</th>
+						<th class="text-center" width="50px">更新<br>頻率</th>
+						<th class="text-center" width="140px">資料源<br>更新時間</th>
+						<th class="text-center" width="120px">最近一次<br>更新時間</th>
+						<th class="text-center" width="80px">最近一次<br>更新筆數</th>
+						<th class="text-center" width="80px">最新資料<br>期間</th>
+						<th class="text-center" width="80px">最新資料<br>期間筆數</th>
+						<th class="text-center" width="60px">資料庫<br>筆數</th>
+						<th class="text-center">資料來源/網址</th>
+						<th class="text-center">備註</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr class="active text-center">
+						<td rowspan=2>股價行情</td>
+						<td><a class="btn btn-warning btn-xs" href="/updatedailyprice/" role="button">立即更新 
+							<span class="glyphicon glyphicon-refresh"></span></a></td>
+						<td>日</td>
+						<td><span class="badge">每日盤後</span></td>
+						<td><span class="badge">{{dailyPrice_modified_date}}</span></td>
+						<td><span class="badge">{{dailyPrice_modified_count}}</span></td>
+						<td>上市<br><span class="badge">{{dailyPrice_sii_count}}</span></td>
+						<td>上櫃<br><span class="badge">{{dailyPrice_otc_count}}</span></td>
+						<td><span class="badge">{{dailyPrice_all_count}}</span></td>
+						<td><a href="http://www.twse.com.tw/ch/trading/exchange/MI_INDEX/genpage/Report201408/A11220140815ALLBUT0999_1.php?select2=ALLBUT0999" target="_blank">
+							上市每日收盤行情</a><br>
+							<a href="http://www.gretai.org.tw/web/stock/aftertrading/otc_quotes_no1430/stk_wn1430.php?l=zh-tw&sect=EW" target="_blank">
+							上櫃每日收盤行情</a>
+						</td>
+						<td>30秒</td>
+					</tr>
+					<tr class="active text-center">
+						<!-- <td></td> -->
+						<td><a class="btn btn-danger btn-xs" href="/updateprice/" role="button">立即更新 
+							<span class="glyphicon glyphicon-refresh"></span></a></td>
+						<td>月</td>
+						<td><span class="badge">每日盤後</span></td>
+						<td><span class="badge">{{price_modified_date}}</span></td>
+						<td><span class="badge">{{price_modified_count}}</span></td>
+						<td><span class="badge">{{price_modified_year_month}}</span></td>
+						<td><span class="badge">{{price_modified_year_month_count}}</span></td>
+						<td><span class="badge">{{price_all_count}}</span></td>
+						<td><a href="http://finance.yahoo.com/q/hp?s=2330.TW&g=m" target="_blank">
+							Yahoo Finance</a></td>
+						<td>65分鐘</td>
+					</tr>
+					<tr class="active text-center">
+						<td>大戶籌碼</td>
+						<td><a class="btn btn-danger btn-xs" href="/updatechip_bigchip/" role="button">立即更新 
+							<span class="glyphicon glyphicon-refresh"></span></a></td>
+						<td>月</td>
+						<td><span class="badge">每月5日前</span></td>
+						<td><span class="badge">{{monthChip_modified_date}}</span></td>
+						<td><span class="badge">{{monthChip_modified_count}}</span></td>
+						<td><span class="badge">{{monthChip_modified_year_month}}</span></td>
+						<td><span class="badge">{{monthChip_modified_year_month_count}}</span></td>
+						<td><span class="badge">{{monthChip_all_count}}</span></td>
+						<td><a href="http://www.tdcc.com.tw/smWeb/QryStock.jsp" target="_blank">
+							集保戶股權分散表</a></td>
+						<td></td>
+					</tr>
+					<tr class="active text-center">
+						<td>公司營收</td>
+						<td><a class="btn btn-danger btn-xs" href="/updatesales/" role="button">立即更新
+							<span class="glyphicon glyphicon-refresh"></span></a></td>
+						<td>月</td>
+						<td><span class="badge">每月10日前</span></td>
+						<td><span class="badge">{{sales_modified_date}}</span></td>
+						<td><span class="badge">{{sales_modified_count}}</span></td>
+						<td><span class="badge">{{sales_modified_year_month}}</span></td>
+						<td><span class="badge">{{sales_modified_year_month_count}}</span></td>
+						<td><span class="badge">{{sales_all_count}}</span></td>
+						<td><a href="http://newmops.tse.com.tw/mops/web/t21sc04_ifrs" target="_blank">
+							每月營業收入彙總表</a></td>
+						<td>50秒</td>
+					</tr>
+					<tr class="active text-center">
+						<td>台灣景氣指標</td>
+						<td><a class="btn btn-danger btn-xs" href="/tw_indicators/" role="button">立即更新 
+							<span class="glyphicon glyphicon-refresh"></span></a></td>
+						<td>月</td>
+						<td>TWII <span class="badge">每日盤後</span><br>
+							PBR <span class="badge">每月10日</span><br>
+							景氣 <span class="badge">每月27日</span>
+						</td>
+						<td><span class="badge">{{monthTWindicator_modified_date}}</span></td>
+						<td><span class="badge">{{monthTWindicator_modified_count}}</span></td>
+						<td>最新<br><span class="badge">{{monthTWindicator_latest_date}}</span></td>
+						<td>最舊<br><span class="badge">{{monthTWindicator_oldest_date}}</span></td>
+						<td><span class="badge">{{monthTWindicator_all_count}}</span></td>
+						<td><a href="http://finance.yahoo.com/q/hp?s=^TWII&g=m" target="_blank">
+							Yahoo Finance ^TWII</a><br>
+							<a href="http://www.twse.com.tw/ch/statistics/statistics_list.php?tm=02&stm=001" target="_blank">
+							證券市場統計概要月報</a><br>
+							<a href="http://index.ndc.gov.tw/inQuery.aspx?lang=1&type=it01" target="_blank">
+							景氣指標查詢系統</a>
+							
+						</td>
+						<td>5秒</td>
+					</tr>
+					<tr class="warning text-center">
+						<td>資產負債表</td>
+						<td><a class="btn btn-info btn-xs" href="/updatefins-bs/" role="button">立即更新 
+							<span class="glyphicon glyphicon-refresh"></span></a></td>
+						<td>季</td>
+						<td rowspan=3>Q1 <span class="badge">5月15日前</span><br><br>
+							Q2 <span class="badge">8月14日前</span><br><br>
+							Q3 <span class="badge">11月14日前</span>
+						</td>
+						<td><span class="badge">{{seasonBS_modified_date}}</span></td>
+						<td><span class="badge">{{seasonBS_modified_count}}</span></td>
+						<td><span class="badge">{{seasonBS_modified_year_season}}</span></td>
+						<td><span class="badge">{{seasonBS_modified_year_season_count}}</span></td>
+						<td><span class="badge">{{seasonBS_all_count}}</span></td>
+						<td rowspan=3>公開資訊觀測站:<br>
+							<a href="http://newmops.tse.com.tw/mops/web/t163sb14" target="_blank">
+							會計師查核(核閱)報告</a><br>
+							<a href="http://newmops.tse.com.tw/mops/web/t164sb03" target="_blank">
+							資產負債表</a><br>
+							<a href="http://newmops.tse.com.tw/mops/web/t164sb04" target="_blank">
+							綜合損益表</a><br>
+							<a href="http://newmops.tse.com.tw/mops/web/t164sb05" target="_blank">
+							現金流量表</a><br></td>
+						<td rowspan=4>60秒/每20檔<br>
+							<button type="button" class="btn btn-xs btn-default" data-toggle="popover"  data-trigger="hover" data-placement="left" title="【補充：更新資料筆數出現差異】" data-content="更新當季三大報表若出現筆數不一致時，可利用「SQLite Database Browser」的「Execute SQL」，輸入類似'select col_A from table_A where col_A not in (select col_B from table_B)'的語法，即可查詢兩張資料表間有差異的股票代號，然後只要再次更新差異部分即可。">說明</button><br><br>
+							<a class="btn btn-warning btn-xs" href="/update_season_all/" role="button">更新季報 
+							<span class="glyphicon glyphicon-refresh"></span></a>
+						</td>
+					</tr>
+					<tr class="warning text-center">
+						<td>綜合損益表</td>
+						<td><a class="btn btn-info btn-xs" href="/updatefins-is/" role="button">立即更新 
+							<span class="glyphicon glyphicon-refresh"></span></a></td>
+						<td>季</td>
+						<!-- <td></td> -->
+						<td><span class="badge">{{seasonIS_modified_date}}</span></td>
+						<td><span class="badge">{{seasonIS_modified_count}}</span></td>
+						<td><span class="badge">{{seasonIS_modified_year_season}}</span></td>
+						<td><span class="badge">{{seasonIS_modified_year_season_count}}</span></td>
+						<td><span class="badge">{{seasonIS_all_count}}</span></td>
+						<!-- <td></td> -->
+						<!-- <td></td> -->
+					</tr>
+					<tr class="warning text-center">
+						<td>現金流量表</td>
+						<td><a class="btn btn-info btn-xs" href="/updatefins-cf/" role="button">立即更新 
+							<span class="glyphicon glyphicon-refresh"></span></a></td>
+						<td>季</td>
+						<!-- <td></td> -->
+						<td><span class="badge">{{seasonCF_modified_date}}</span></td>
+						<td><span class="badge">{{seasonCF_modified_count}}</span></td>
+						<td><span class="badge">{{seasonCF_modified_year_season}}</span></td>
+						<td><span class="badge">{{seasonCF_modified_year_season_count}}</span></td>
+						<td><span class="badge">{{seasonCF_all_count}}</span></td>
+						<!-- <td></td> -->
+						<!-- <td></td> -->
+					</tr>
+					<tr class="warning text-center">
+						<td>財務比率</td>
+						<td><a class="btn btn-info btn-xs" href="/updatefins-fr/" role="button">立即更新 
+							<span class="glyphicon glyphicon-refresh"></span></a>
+						</td>
+						<td>季</td>
+						<td>季報更新後</td>
+						<td><span class="badge">{{seasonFR_modified_date}}</span></td>
+						<td><span class="badge">{{seasonFR_modified_count}}</span></td>
+						<td><span class="badge">{{seasonFR_modified_year_season}}</span></td>
+						<td><span class="badge">{{seasonFR_modified_year_season_count}}</span></td>
+						<td><span class="badge">{{seasonFR_all_count}}</span></td>
+						<td>自行計算</td>
+						<!-- <td></td> -->
+					</tr>
+					<tr class="success text-center">
+						<td>年綜合損益表</td>
+						<td><a class="btn btn-success btn-xs" href="/updatefins-is-annual/" role="button">立即更新 
+							<span class="glyphicon glyphicon-refresh"></span></a></td>
+						<td>年</td>
+						<td><span class="badge">3月31日前</span></td>
+						<td><span class="badge">{{annualIS_modified_date}}</span></td>
+						<td><span class="badge">{{annualIS_modified_count}}</span></td>
+						<td><span class="badge">{{annualIS_modified_year}}</span></td>
+						<td><span class="badge">{{annualIS_modified_year_count}}</span></td>
+						<td><span class="badge">{{annualIS_all_count}}</span></td>
+						<td rowspan=3>同季報</td>
+						<td rowspan=3>60秒/每20檔<br><br>
+							<a class="btn btn-warning btn-xs" href="/update_annual_all/" role="button">更新年報 
+							<span class="glyphicon glyphicon-refresh"></span></a>
+						</td>
+					</tr>
+					<tr class="success text-center">
+						<td>年現金流量表</td>
+						<td><a class="btn btn-success btn-xs" href="/updatefins-cf-annual/" role="button">立即更新 
+							<span class="glyphicon glyphicon-refresh"></span></a></td>
+						<td>年</td>
+						<td><span class="badge">3月31日前</span></td>
+						<td><span class="badge">{{annualCF_modified_date}}</span></td>
+						<td><span class="badge">{{annualCF_modified_count}}</span></td>
+						<td><span class="badge">{{annualCF_modified_year}}</span></td>
+						<td><span class="badge">{{annualCF_modified_year_count}}</span></td>
+						<td><span class="badge">{{annualCF_all_count}}</span></td>
+						<!-- <td></td> -->
+						<!-- <td></td> -->
+					</tr>
+					<tr class="success text-center">
+						<td>年財務比率</td>
+						<td><a class="btn btn-success btn-xs" href="/updatefins-fr-annual/" role="button">立即更新 
+							<span class="glyphicon glyphicon-refresh"></span></a>
+						</td>
+						<td>年</td>
+						<td>年報更新後</td>
+						<td><span class="badge">{{annualFR_modified_date}}</span></td>
+						<td><span class="badge">{{annualFR_modified_count}}</span></td>
+						<td><span class="badge">{{annualFR_modified_year}}</span></td>
+						<td><span class="badge">{{annualFR_modified_year_count}}</span></td>
+						<td><span class="badge">{{annualFR_all_count}}</span></td>
+						<!-- <td></td> -->
+						<!-- <td></td> -->
+					</tr>
+					<tr class="success text-center">
+						<td>盈餘分配</td>
+						<td><a class="btn btn-success btn-xs" href="/updatefins-payout/" role="button">立即更新 
+							<span class="glyphicon glyphicon-refresh"></span></a></td>
+						<td>年</td>
+						<td><span class="badge">6月30日前</span></td>
+						<td><span class="badge">{{earningsPayout_modified_date}}</span></td>
+						<td><span class="badge">{{earningsPayout_modified_count}}</span></td>
+						<td><span class="badge">{{earningsPayout_modified_year}}</span></td>
+						<td><span class="badge">{{earningsPayout_modified_year_count}}</span></td>
+						<td><span class="badge">{{earningsPayout_all_count}}</span></td>
+						<td><a href="http://newmops.tse.com.tw/mops/web/t05st09_new" target="_blank">
+							股利分派情形</a></td>
+						<td>40秒</td>
+					</tr>
+					<tr class="active text-center">
+						<td>股票代號</td>
+						<td><a class="btn btn-danger btn-xs" href="/updateid/" role="button">立即更新 
+							<span class="glyphicon glyphicon-refresh"></span></a></td>
+						<td>月</td>
+						<td>不定期</td>
+						<td><span class="badge">{{id_modified_date}}</span></td>
+						<td><span class="badge">{{id_modified_count}}</span></td>
+						<td>上市<br><span class="badge">{{id_sii_count}}</span></td>
+						<td>上櫃<br><span class="badge">{{id_otc_count}}</span></td>
+						<td><span class="badge">{{id_all_count}}</span></td>
+						<td><a href="http://isin.twse.com.tw/isin/C_public.jsp?strMode=2" target="_blank">
+							本國上市證券</a><br>
+							<a href="http://isin.twse.com.tw/isin/C_public.jsp?strMode=4" target="_blank">
+							本國上櫃證券</a></td>
+						</td>
+						<td>90秒</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div><!-- /表格顯示區 -->
+	  
+
+{% endblock %}

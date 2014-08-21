@@ -1,0 +1,77 @@
+{% extends "base_new.html" %}
+
+
+{% block content %}
+<!-- jQuery (necessary for Highchart & Bootstrap's JavaScript plugins) -->
+{% load staticfiles %}
+<!-- <script src="{% static "js/highchart-4.0.1/highcharts.js" %}"></script> -->
+<script src="{% static "js/highstock-2.0.1/highstock.js" %}"></script>
+
+<!-- 標題 -->
+<div class="container" style="width:89%">
+	<div class="page-header">
+	  <h3 style="text-align:center">{{table_title}} <small>近5年營收趨勢追蹤</small></h3>
+	</div>
+</div><!-- /標題 -->
+
+<!-- 切換頁籤 -->
+<div class="container" style="width:89%">
+	<ul class="nav nav-tabs">
+		<li class="active" id="season_effect"><a data-toggle="tab">營收季節效應</a></li>
+		<li id="price_momentum_1"><a data-toggle="tab">股價-營收動能關聯(1)</a></li>
+		<li id="price_momentum_2"><a data-toggle="tab">股價-營收動能關聯(2)</a></li>
+	</ul>
+</div><!-- /切換頁籤 -->
+
+<!-- Highchart圖表顯示區 -->
+<div class="container" id="chart" style="width:89%; height:400px;"></div>
+
+<!-- 表格顯示區 -->
+<div class="container" id="table" style="width:90%">
+	<div class="panel-body">
+		<table class="table table-hover table-condensed table-bordered">
+			<thead>
+				<tr id="month_series"  class="info">
+					<th style='text-align:center'>年度</th>
+					<th style='text-align:center'>項目 / 月份</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr id="sales_yr0" class="active"></tr>
+				<tr id="sales_yoy_yr0" class="danger"></tr>
+				<tr id="acc_sales_yr0" class="active"></tr>
+				<tr id="acc_sales_yoy_yr0" class="danger"></tr>
+
+				<tr id="sales_yr1" class="active"></tr>
+				<tr id="sales_yoy_yr1" class="danger"></tr>
+				<tr id="acc_sales_yr1" class="active"></tr>
+				<tr id="acc_sales_yoy_yr1" class="danger"></tr>
+
+				<tr id="sales_yr2" class="active"></tr>
+				<tr id="sales_yoy_yr2" class="danger"></tr>
+				<tr id="acc_sales_yr2" class="active"></tr>
+				<tr id="acc_sales_yoy_yr2" class="danger"></tr>
+
+				<tr id="sales_yr3" class="active"></tr>
+				<tr id="sales_yoy_yr3" class="danger"></tr>
+				<tr id="acc_sales_yr3" class="active"></tr>
+				<tr id="acc_sales_yoy_yr3" class="danger"></tr>
+
+				<tr id="sales_yr4" class="active"></tr>
+				<tr id="sales_yoy_yr4" class="danger"></tr>
+				<tr id="acc_sales_yr4" class="active"></tr>
+				<tr id="acc_sales_yoy_yr4" class="danger"></tr>
+			</tbody>
+		</table>
+	</div>
+</div><!-- /表格顯示區 -->
+
+{% endblock %}
+
+
+{% block footer %}
+	{% load staticfiles %}
+	<script src="{% static "sales_tracking.js" %}"></script>
+{% endblock %}
+
+ 

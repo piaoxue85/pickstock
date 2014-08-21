@@ -1,0 +1,150 @@
+{% extends "base_new.html" %}
+
+{% block content %}
+<!-- jQuery (necessary for Highchart & Bootstrap's JavaScript plugins) -->
+{% load staticfiles %}
+<script src="{% static "js/highchart-4.0.1/highcharts.js" %}"></script>
+
+<!-- 標題 -->
+<div class="container" style="width:89%">
+	<div class="page-header">
+	  <h3 style="text-align:center">{{table_title}} <small>近5年財務基本面總覽</small></h3>
+	</div>
+</div><!-- /標題 -->
+
+<!-- 切換頁籤 -->	
+<div class="container" style="width:89%">
+	<ul class="nav nav-tabs">
+		<li id="defensive_indicator"><a data-toggle="tab">防禦性指標</a></li>
+		<li id="potentialrisk_indicator"><a data-toggle="tab">潛在風險指標</a></li>
+		<li class="active" id="profitable_indicator_1"><a data-toggle="tab">獲利性指標(1)</a></li>
+		<li id="profitable_indicator_2"><a data-toggle="tab">獲利性指標(2)</a></li>
+		<li id="stability_indicator"><a data-toggle="tab">本業獲利穩定指標</a></li>
+		<li id="cashflow_indicator"><a data-toggle="tab">現金流量指標</a></li>
+	</ul>
+</div><!-- /切換頁籤 -->
+
+<!-- Highchart圖表區 -->
+<div class="container" id="chart" style="width:89%; height:360px"></div><!-- /Highchart圖表區 -->
+
+<!-- 表格顯示區 -->
+<div class="container" style="width:90%">
+	<div class="panel-body">
+		<table class="table table-hover table-condensed table-bordered">
+			<thead>
+				<tr id="quarter_name"  class="info">
+					<th>指標類別</th>
+					<th>項目 / 季度</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr id="total_operating_revenue" class="active">
+					<td rowspan=2>營收表現</td>
+					<td>營業收入(仟元)</td>
+				</tr>
+				<tr id="total_operating_revenue_yoy" class="active">
+					<td>營收年增率</td>
+				</tr>
+				<tr id="accounts_receivable_turnover_ratio" class="success">
+					<td rowspan=3>防禦性</td>
+					<td>應收帳款週轉率(次/年)
+						<button type="button" class="btn btn-xs btn-default" data-toggle="popover"  data-trigger="hover" data-placement="top" title="【公式 = 營業收入/平均應收帳款】" data-content="資產負債表上會把一家公司卡死的是「應收帳款」，可以用來測量公司被掠奪的程度。應收帳款週轉率越高越好，但保持穩定即可，重點是觀察它的變化趨勢，而非絕對數據的高低。當公司營收停滯，而應收帳款卻暴增時，就應該避開此投資。">說明</button>
+					</td>
+				</tr>
+				<tr id="inventory_turnover_ratio" class="success">
+					<td>存貨週轉率(次/年)
+						<button type="button" class="btn btn-xs btn-default" data-toggle="popover"  data-trigger="hover" data-placement="top" title="【公式 = 營業成本/平均存貨】" data-content="隨著營收增加，「存貨」通常也隨之增加。庫存過低可能面臨無貨可賣的窘境，但庫存過高一旦遭遇景氣反轉，則有削價競爭的壓力。庫存管理與銷售策略良好的公司，存貨週轉率理應攀高或維持穩定。當公司庫存開始惡化時，一則採取削價競爭導致營業利益減少，二則認列跌價損失墊高營業費用，不論何者都將使「營業利益率」下降。">說明</button>
+					</td>
+				</tr>
+				<tr id="inventory_sales_ratio" class="success">
+					<td>存貨營收比(季)
+						<button type="button" class="btn btn-xs btn-default" data-toggle="popover"  data-trigger="hover" data-placement="top" title="【公式 = 當季存貨/營業收入】" data-content="存貨週轉率只是存貨成本與存貨之間的關係，但「存貨營收比」的分母是營業收入，而營業收入同時包含了成本與損益，因此隱含有營業毛利越高的公司，其「存貨營收比」則越低的概念。如果一家公司的存貨營收比逐季下降，那當然是一件好事。">說明</button>
+					</td>
+				</tr>
+				<tr id="available_for_sale_to_equity_ratio" class="danger">
+					<td rowspan=3>潛在風險</td>
+					<td>備供出售比率
+					<button type="button" class="btn btn-xs btn-default" data-toggle="popover"  data-trigger="hover" data-placement="top" title="【公式 = 非流動的備供出售金融資產/淨值(即股東權益)】" data-content="上市櫃公司的長期投資或轉投資，會根據持有目的與時間長短，分為「權益法」、「交易目的」、「備供出售」三種，其中「權益法」的轉投資損益會認列於財報中，而「交易目的」則隨市價變動提列於損益表的營業外收支，唯有「備供出售」在遭遇跌價時，只需在資產負債表的股東權益項目下認列長期投資評價損失，而不需在損益表中提列跌價損失。因此，在評估一家公司損益表現時，除了應該把投資回沖利益排除，回歸到本業上的經營能力表現之外，更需注意「備供出售」背後可能隱藏的跌價損失。(補充:在IFRSs實施後，「備供出售」須以公允價值衡量變動列入其他綜合損益，即「備供出售金融資產未實現評價損益」，因此公司已無法再隱藏鉅額投資損失)">說明</button>
+				</td>
+				</tr>
+				<tr id="financial_debt_ratio" class="danger">
+					<td>金融負債比率
+					<button type="button" class="btn btn-xs btn-default" data-toggle="popover"  data-trigger="hover" data-placement="top" title="【公式 = 金融負債/資產總額】" data-content="一家公司的負債大致可分為「金融負債」和「與營業循環有關的負債」兩種，後者通常伴隨著營業活動增加而增加，但相對的，若哪一天公司營收衰退或營運規模縮小時，這類負債也會跟著縮小；從另一個角度看，應付帳款與應付票據其實還是一種無息的現金週轉。「金融負債」則不然，除非償還，否則永遠不會隨著營業額減少而降低；況且，金融借款還得負擔利息，利率一旦提高，金融負債金額過高的公司，獲利會受到嚴重的侵蝕。">說明</button>
+				</td>
+				</tr>
+				<tr id="intangible_asset_to_equity_ratio" class="danger">
+					<td>無形資產比率
+					<button type="button" class="btn btn-xs btn-default" data-toggle="popover"  data-trigger="hover" data-placement="top" title="【公式 = 無形資產/淨值(即股東權益)】" data-content="「無形資產」和固定資產一樣，必須按期限逐年攤銷。台灣絕大多數上市櫃公司的無形資產都源自購併，在帳務上將高於公允市價的溢價部分作成商譽，列為資產負債表內的無形資產，因而造成未來營運上的一大隱憂。一旦該無形資產的市價與帳列成本產生巨額落差，便會爆發巨額的資產減損引爆財務地雷。因此，「無形資產比率」過高(超過10%就該留意)或意外的大幅增加時，都不應該掉以輕心。">說明</button>
+				</td>
+				</tr>
+				<tr id="total_property_plant_and_equipment" class="active">
+					<td rowspan=2> - </td>
+					<td>固定資產(仟元)</td>
+				</tr>
+				<tr id="fixed_asset_turnover_ratio" class="active">
+					<td>固定資產週轉率</td>
+				</tr>
+				<tr id="depreciation_expense" class="warning">
+					<td rowspan=5>獲利性</td>
+					<td>折舊費用(仟元)
+						<button type="button" class="btn btn-xs btn-default" data-toggle="popover"  data-trigger="hover" data-placement="top" title="【攸關營益率、稅前淨利、EPS】" data-content="製造業有廠房和機器設備等非流動資產，自然就會產生「折舊」。站在現金流量的角度，「折舊」金額越大，營運現金流量就越大；但從損益的觀點來看，「折舊」金額大小則會侵蝕毛利、營業利益，是影響一家公司EPS的重要關鍵。">說明</button>
+					</td>
+				</tr>
+				<tr id="depreciation_to_sales_ratio" class="warning">
+					<td>折舊負擔比率
+						<button type="button" class="btn btn-xs btn-default" data-toggle="popover"  data-trigger="hover" data-placement="top" title="【公式 = 當季折舊/營業收入】" data-content="折舊通常分布在銷貨成本與營業費用兩類支出項目內，其中多數都被歸類到銷貨成本(或營業成本)，因此折舊高低決定營業毛利的高低。當折舊金額過高，不只會侵蝕公司的營業毛利，也連帶地影響營業利益與稅後淨利。另一指標「未折舊比率(公式=1-累積折舊/廠房設備)」，因為所使用的會計科目「累積折舊」，在IFRS之後只能在公司財報的附註中查到，通常在附註六之(五)。「折舊負擔比率」低或「未折舊比率」低的公司，只要接到新訂單或營收成長，對其稅前淨利和EPS的挹注就比較可觀。">說明</button>
+					</td>
+				</tr>
+				<tr id="gross_profit_margin" class="warning">
+					<td>營業毛利率</td>
+				</tr>
+				<tr id="operating_profit_margin" class="warning">
+					<td>營業利益率
+						<button type="button" class="btn btn-xs btn-default" data-toggle="popover"  data-trigger="hover" data-placement="top" title="【公式 = 營業利益/營業收入】" data-content="如果「營業利益率」長期穩定，一旦公司的營收出現成長，只要股本沒有膨脹，每股盈餘自然也跟著水漲船高；但股價的高低漲跌，並非受淨利或每股盈餘的絕對數字所影響，而是受到相對的成長衰退所牽引，因此，投資時要挑選「營收年增率」是正數的(最好還可以成長)，同時要搭配有穩定的「營業利益率」。">說明</button>
+					</td>
+				</tr>
+				<tr id="earnings_per_share" class="warning">
+					<td>每股盈餘EPS</td>
+				</tr>				
+				<tr id="net_operating_income_loss" class="warning">
+					<td rowspan=2>本業獲利穩定</td>
+					<td>營業利益(仟元)
+						<button type="button" class="btn btn-xs btn-default" data-toggle="popover"  data-trigger="hover" data-placement="top" title="【公式 = 營業收入*營益率】" data-content="損益表中最重要的科目是「營業利益」，因為這是衡量一家公司本業經營上的獲益。">說明</button>
+					</td>
+				</tr>
+				<tr id="operating_profit_to_net_profit_before_tax_ratio" class="warning">
+					<td>本業獲利比重
+						<button type="button" class="btn btn-xs btn-default" data-toggle="popover"  data-trigger="hover" data-placement="top" title="【公式 = 營業利益/稅前淨利】" data-content="稅前淨利和營業利益兩者之間的差距是營業外收支，這種非常態性的收入或支出，無法造成趨勢性與常態性的收入，只能造成損益表的錦上添花或雪上加霜，最終還是得回到本業，也就是營業利益身上，而市場大致上還是會讓「本業獲利比重」較高的公司，享有較高的本益比區間。(補充:根據IFRSs規定，匯兌損益可能列入營業費用當中，也就是原本屬於營業外收支的匯兌損益將被視為本業的一環，如此將增加評估本業績效的複雜度)">說明</button>
+					</td>
+				</tr>
+				<tr id="net_cash_flows_from_used_in_operating_activities" class="info">
+					<td rowspan=3>現金流量</td>
+					<td>營運現金流量</td>
+				</tr>
+				<tr id="net_cash_flows_from_used_in_investing_activities" class="info">
+					<td>投資現金流量</td>
+				</tr>
+				<tr id="free_cash_flow" class="info">
+					<td>自由現金流量
+						<button type="button" class="btn btn-xs btn-default" data-toggle="popover"  data-trigger="hover" data-placement="top" title="【公式 = 營運現金流量+投資現金流量】" data-content="一家公司長期競爭力在於「賺取現金之能力」，投資人不應該只單單看淨利和EPS。而一家公司「賺取現金之能力」，端視其「長期自由現金流量」。長期自由現金流量若呈現淨流出，不論稅後淨利是高是低，該公司勢必得填補資金缺口，而補足缺口的方法不外乎：(一)動用公司現金；(二)舉債；(三)現金增資。不論是哪一種，其實都會損及股東權益，或是增加股票在外流通籌碼，自然，股價就容易下跌。">說明</button>
+					</td>
+				</tr>
+				<tr id="tax_rate" class="active">
+					<td rowspan=2> - </td>
+					<td>所得稅率</td>
+				</tr>
+				<tr id="ordinary_share" class="active">
+					<td>普通股股本(仟股)</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>	
+</div><!-- /表格顯示區 -->
+
+
+{% endblock %}
+
+{% block footer %}
+    {% load staticfiles %}
+    <script src="{% static "stock_overview.js" %}"></script>
+{% endblock %}

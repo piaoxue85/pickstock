@@ -1,0 +1,1 @@
+select ID from stockfins_seasoncashflow where ID not in (select ID from stockfins_seasonincomestatement)
