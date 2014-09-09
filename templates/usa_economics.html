@@ -1,0 +1,59 @@
+{% extends "base_new.html" %}
+
+
+{% block content %}
+<!-- jQuery (necessary for Highchart & Bootstrap's JavaScript plugins) -->
+{% load staticfiles %}
+<script src="{% static "js/highstock-2.0.1/highstock.js" %}"></script>
+
+<!-- 標題 -->
+<!-- <div class="container" style="width:85%">
+	<div class="page-header">
+	  <h3 style="text-align:center">美國重要經濟指標追蹤</h3>
+	</div>
+</div> --><!-- /標題 -->
+<div class="container" style="width:85%">
+	<div class="page-header">
+		<blockquote>
+			<h2><span class="glyphicon glyphicon-bullhorn"></span> 美國重要經濟指標追蹤</h2>
+			<footer id='usa_eco_footer'>美國GDP佔全球1/4強，且民間消費佔比高達70%，讓美國穩坐全球最大進口國，其景氣榮枯牽動全球市場，<br>&nbsp&nbsp&nbsp&nbsp因此必須掌握其經濟情勢變化，並提前判斷貨幣政策風向。</footer>
+			<footer>資料來源：<a href="http://research.stlouisfed.org/fred2/" target="_blank">St. Louis Fed</a>, and <a href="https://api.stlouisfed.org/docs/fred/" target="_blank">FRED® API</a></footer>
+			
+		</blockquote>
+	</div>
+</div><!-- /標題 -->
+
+<!-- 切換頁籤 -->
+<div class="container" style="width:85%">
+	<ul class="nav nav-tabs">
+		<li class="active" id="usa_economics_gdp_contribution"><a data-toggle="tab">GDP佔比分析</a></li>
+		<li id="usa_economics_gdp"><a data-toggle="tab">GDP成長率</a></li>
+		<li id="usa_economics_unrate"><a data-toggle="tab">失業率趨勢</a></li>
+		<li id="#"><a data-toggle="tab">進口額與民間消費</a></li>
+		<li id="usa_economics_inflation"><a data-toggle="tab">通膨 & 利率</a></li>
+		<li id="usa_economics_fxrate"><a data-toggle="tab">美元指數 & 匯率</a></li>
+	</ul>
+</div><!-- /切換頁籤 -->
+
+<!-- Highchart圖表顯示區 -->
+<div class="container" id="chart" style="width:85%; height:360px;"></div>
+
+<!-- 表格顯示區 -->
+<div class="container" id="table" style="width:86%">
+	<div class="panel-body">
+		<table class="table table-hover table-condensed table-bordered table table-striped">
+			<thead id="usa_economics_data_title">
+			</thead>
+			<tbody id="usa_economics_data">
+			</tbody>
+		</table>
+	</div>
+</div><!-- /表格顯示區 -->
+
+{% endblock %}
+
+
+{% block footer %}
+	{% load staticfiles %}
+	<script src="{% static "usa_economics.js" %}"></script>
+{% endblock %}

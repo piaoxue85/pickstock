@@ -238,6 +238,7 @@ def update(request):
 		"price_modified_year_month_count":price_modified_year_month_count,
 
 		"dailyPrice_modified_date":datetime.strftime(dailyPrice_modified_date, '%Y-%m-%d'),
+		# "dailyPrice_modified_date":datetime.strftime(date.today(), '%Y-%m-%d'),
 		"dailyPrice_modified_count":dailyPrice_modified_count,
 		"dailyPrice_all_count":dailyPrice_all_count,
 		"dailyPrice_sii_count":dailyPrice_sii_count,

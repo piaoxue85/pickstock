@@ -235,208 +235,207 @@ function basic_overview() {
 
 // Load the fonts
 Highcharts.createElement('link', {
-   href: 'http://fonts.googleapis.com/css?family=Unica+One',
-   rel: 'stylesheet',
-   type: 'text/css'
+	href: 'http://fonts.googleapis.com/css?family=Unica+One',
+	rel: 'stylesheet',
+	type: 'text/css'
 }, null, document.getElementsByTagName('head')[0]);
 
 Highcharts.theme = {
-   colors: ["#2b908f", "#90ee7e", "#f45b5b", "#7798BF", "#aaeeee", "#ff0066", "#eeaaee",
-      "#55BF3B", "#DF5353", "#7798BF", "#aaeeee"],
-   chart: {
-      backgroundColor: {
-         linearGradient: { x1: 0, y1: 0, x2: 1, y2: 1 },
-         stops: [
-            [0, '#2a2a2b'],
-            [1, '#3e3e40']
-         ]
-      },
-      style: {
-         fontFamily: "'Unica One', sans-serif"
-      },
-      plotBorderColor: '#606063'
-   },
-   title: {
-      style: {
-         color: '#E0E0E3',
-         textTransform: 'uppercase',
-         fontSize: '20px'
-      }
-   },
-   subtitle: {
-      style: {
-         color: '#E0E0E3',
-         textTransform: 'uppercase'
-      }
-   },
-   xAxis: {
-      gridLineColor: '#707073',
-      labels: {
-         style: {
-            color: '#E0E0E3'
-         }
-      },
-      lineColor: '#707073',
-      minorGridLineColor: '#505053',
-      tickColor: '#707073',
-      title: {
-         style: {
-            color: '#A0A0A3'
+	colors: ["#2b908f", "#90ee7e", "#f45b5b", "#7798BF", "#aaeeee", "#ff0066", "#eeaaee",
+		"#55BF3B", "#DF5353", "#7798BF", "#aaeeee"],
+	chart: {
+		backgroundColor: {
+			linearGradient: { x1: 0, y1: 0, x2: 1, y2: 1 },
+			stops: [
+				[0, '#2a2a2b'],
+				[1, '#3e3e40']
+			]
+		},
+		style: {
+			fontFamily: "'Unica One', sans-serif"
+		},
+		plotBorderColor: '#606063'
+	},
+	title: {
+		style: {
+			color: '#E0E0E3',
+			textTransform: 'uppercase',
+			fontSize: '20px'
+		}
+	},
+	subtitle: {
+		style: {
+			color: '#E0E0E3',
+			textTransform: 'uppercase'
+		}
+	},
+	xAxis: {
+		gridLineColor: '#707073',
+		labels: {
+			style: {
+				color: '#E0E0E3'
+			}
+		},
+		lineColor: '#707073',
+		minorGridLineColor: '#505053',
+		tickColor: '#707073',
+		title: {
+			style: {
+				color: '#A0A0A3'
+			}
+		}
+	},
+	yAxis: {
+		gridLineColor: '#707073',
+		labels: {
+			style: {
+				color: '#E0E0E3'
+			}
+		},
+		lineColor: '#707073',
+		minorGridLineColor: '#505053',
+		tickColor: '#707073',
+		tickWidth: 1,
+		title: {
+			style: {
+				color: '#A0A0A3'
+			}
+		}
+	},
+	tooltip: {
+		backgroundColor: 'rgba(0, 0, 0, 0.85)',
+		style: {
+			color: '#F0F0F0'
+		}
+	},
+	plotOptions: {
+		series: {
+			dataLabels: {
+				color: '#B0B0B3'
+			},
+			marker: {
+				lineColor: '#333'
+			}
+		},
+		boxplot: {
+			fillColor: '#505053'
+		},
+		candlestick: {
+			lineColor: 'white'
+		},
+		errorbar: {
+			color: 'white'
+		}
+	},
+	legend: {
+		itemStyle: {
+			color: '#E0E0E3'
+		},
+		itemHoverStyle: {
+			color: '#FFF'
+		},
+		itemHiddenStyle: {
+			color: '#606063'
+		}
+	},
+	credits: {
+		style: {
+			color: '#666'
+		}
+	},
+	labels: {
+		style: {
+			color: '#707073'
+		}
+	},
 
-         }
-      }
-   },
-   yAxis: {
-      gridLineColor: '#707073',
-      labels: {
-         style: {
-            color: '#E0E0E3'
-         }
-      },
-      lineColor: '#707073',
-      minorGridLineColor: '#505053',
-      tickColor: '#707073',
-      tickWidth: 1,
-      title: {
-         style: {
-            color: '#A0A0A3'
-         }
-      }
-   },
-   tooltip: {
-      backgroundColor: 'rgba(0, 0, 0, 0.85)',
-      style: {
-         color: '#F0F0F0'
-      }
-   },
-   plotOptions: {
-      series: {
-         dataLabels: {
-            color: '#B0B0B3'
-         },
-         marker: {
-            lineColor: '#333'
-         }
-      },
-      boxplot: {
-         fillColor: '#505053'
-      },
-      candlestick: {
-         lineColor: 'white'
-      },
-      errorbar: {
-         color: 'white'
-      }
-   },
-   legend: {
-      itemStyle: {
-         color: '#E0E0E3'
-      },
-      itemHoverStyle: {
-         color: '#FFF'
-      },
-      itemHiddenStyle: {
-         color: '#606063'
-      }
-   },
-   credits: {
-      style: {
-         color: '#666'
-      }
-   },
-   labels: {
-      style: {
-         color: '#707073'
-      }
-   },
+	drilldown: {
+		activeAxisLabelStyle: {
+			color: '#F0F0F3'
+		},
+		activeDataLabelStyle: {
+			color: '#F0F0F3'
+		}
+	},
 
-   drilldown: {
-      activeAxisLabelStyle: {
-         color: '#F0F0F3'
-      },
-      activeDataLabelStyle: {
-         color: '#F0F0F3'
-      }
-   },
+	navigation: {
+		buttonOptions: {
+			symbolStroke: '#DDDDDD',
+			theme: {
+				fill: '#505053'
+			}
+		}
+	},
 
-   navigation: {
-      buttonOptions: {
-         symbolStroke: '#DDDDDD',
-         theme: {
-            fill: '#505053'
-         }
-      }
-   },
+	// scroll charts
+	rangeSelector: {
+		buttonTheme: {
+			fill: '#505053',
+			stroke: '#000000',
+			style: {
+				color: '#CCC'
+			},
+			states: {
+				hover: {
+					fill: '#707073',
+					stroke: '#000000',
+					style: {
+						color: 'white'
+					}
+				},
+				select: {
+					fill: '#000003',
+					stroke: '#000000',
+					style: {
+						color: 'white'
+					}
+				}
+			}
+		},
+		inputBoxBorderColor: '#505053',
+		inputStyle: {
+			backgroundColor: '#333',
+			color: 'silver'
+		},
+		labelStyle: {
+			color: 'silver'
+		}
+	},
 
-   // scroll charts
-   rangeSelector: {
-      buttonTheme: {
-         fill: '#505053',
-         stroke: '#000000',
-         style: {
-            color: '#CCC'
-         },
-         states: {
-            hover: {
-               fill: '#707073',
-               stroke: '#000000',
-               style: {
-                  color: 'white'
-               }
-            },
-            select: {
-               fill: '#000003',
-               stroke: '#000000',
-               style: {
-                  color: 'white'
-               }
-            }
-         }
-      },
-      inputBoxBorderColor: '#505053',
-      inputStyle: {
-         backgroundColor: '#333',
-         color: 'silver'
-      },
-      labelStyle: {
-         color: 'silver'
-      }
-   },
+	navigator: {
+		handles: {
+			backgroundColor: '#666',
+			borderColor: '#AAA'
+		},
+		outlineColor: '#CCC',
+		maskFill: 'rgba(255,255,255,0.1)',
+		series: {
+			color: '#7798BF',
+			lineColor: '#A6C7ED'
+		},
+		xAxis: {
+			gridLineColor: '#505053'
+		}
+	},
 
-   navigator: {
-      handles: {
-         backgroundColor: '#666',
-         borderColor: '#AAA'
-      },
-      outlineColor: '#CCC',
-      maskFill: 'rgba(255,255,255,0.1)',
-      series: {
-         color: '#7798BF',
-         lineColor: '#A6C7ED'
-      },
-      xAxis: {
-         gridLineColor: '#505053'
-      }
-   },
+	scrollbar: {
+		barBackgroundColor: '#808083',
+		barBorderColor: '#808083',
+		buttonArrowColor: '#CCC',
+		buttonBackgroundColor: '#606063',
+		buttonBorderColor: '#606063',
+		rifleColor: '#FFF',
+		trackBackgroundColor: '#404043',
+		trackBorderColor: '#404043'
+	},
 
-   scrollbar: {
-      barBackgroundColor: '#808083',
-      barBorderColor: '#808083',
-      buttonArrowColor: '#CCC',
-      buttonBackgroundColor: '#606063',
-      buttonBorderColor: '#606063',
-      rifleColor: '#FFF',
-      trackBackgroundColor: '#404043',
-      trackBorderColor: '#404043'
-   },
-
-   // special colors for some of the
-   legendBackgroundColor: 'rgba(0, 0, 0, 0.5)',
-   background2: '#505053',
-   dataLabelsColor: '#B0B0B3',
-   textColor: '#C0C0C0',
-   contrastTextColor: '#F0F0F3',
-   maskColor: 'rgba(255,255,255,0.3)'
+	// special colors for some of the
+	legendBackgroundColor: 'rgba(0, 0, 0, 0.5)',
+	background2: '#505053',
+	dataLabelsColor: '#B0B0B3',
+	textColor: '#C0C0C0',
+	contrastTextColor: '#F0F0F3',
+	maskColor: 'rgba(255,255,255,0.3)'
 };
 
 /**
@@ -446,57 +445,57 @@ Highcharts.theme = {
  * 以下這部分是Highchart的plugin，可以把多個Y軸的0對準在同一水平，直接複製貼上即可使用
  */
 (function (H) {
-    var each = H.each;
-    H.wrap(H.Chart.prototype, 'adjustTickAmounts', function (proceed) {
-        var ticksBelowThreshold = 0,
-            ticksAboveThreshold = 0;
-        if (this.options.chart.alignThresholds) {
-            each(this.yAxis, function (axis) {
-                var threshold = axis.series[0] && axis.series[0].options.threshold || 0,
-                    index = axis.tickPositions && axis.tickPositions.indexOf(threshold);
+	var each = H.each;
+	H.wrap(H.Chart.prototype, 'adjustTickAmounts', function (proceed) {
+		var ticksBelowThreshold = 0,
+			ticksAboveThreshold = 0;
+		if (this.options.chart.alignThresholds) {
+			each(this.yAxis, function (axis) {
+				var threshold = axis.series[0] && axis.series[0].options.threshold || 0,
+					index = axis.tickPositions && axis.tickPositions.indexOf(threshold);
 
-                if (index !== undefined && index !== -1) {
-                    axis.ticksBelowThreshold = index;
-                    axis.ticksAboveThreshold = axis.tickPositions.length - index;
-                    ticksBelowThreshold = Math.max(ticksBelowThreshold, index);
-                    ticksAboveThreshold = Math.max(ticksAboveThreshold, axis.ticksAboveThreshold);
-                }
-            });
+				if (index !== undefined && index !== -1) {
+					axis.ticksBelowThreshold = index;
+					axis.ticksAboveThreshold = axis.tickPositions.length - index;
+					ticksBelowThreshold = Math.max(ticksBelowThreshold, index);
+					ticksAboveThreshold = Math.max(ticksAboveThreshold, axis.ticksAboveThreshold);
+				}
+			});
 
-            each(this.yAxis, function (axis) {
-                
-                var tickPositions = axis.tickPositions;
+			each(this.yAxis, function (axis) {
+				
+				var tickPositions = axis.tickPositions;
 
-                if (tickPositions) {
+				if (tickPositions) {
 
-                    if (axis.ticksAboveThreshold < ticksAboveThreshold) {
-                        while (axis.ticksAboveThreshold < ticksAboveThreshold) {
-                            tickPositions.push(
-                                tickPositions[tickPositions.length - 1] + axis.tickInterval
-                            );
-                            axis.ticksAboveThreshold++;
-                        }
-                    }
+					if (axis.ticksAboveThreshold < ticksAboveThreshold) {
+						while (axis.ticksAboveThreshold < ticksAboveThreshold) {
+							tickPositions.push(
+								tickPositions[tickPositions.length - 1] + axis.tickInterval
+							);
+							axis.ticksAboveThreshold++;
+						}
+					}
 
-                    if (axis.ticksBelowThreshold < ticksBelowThreshold) {
-                        while (axis.ticksBelowThreshold < ticksBelowThreshold) {
-                            tickPositions.unshift(
-                                tickPositions[0] - axis.tickInterval
-                            );
-                            axis.ticksBelowThreshold++;
-                        }
+					if (axis.ticksBelowThreshold < ticksBelowThreshold) {
+						while (axis.ticksBelowThreshold < ticksBelowThreshold) {
+							tickPositions.unshift(
+								tickPositions[0] - axis.tickInterval
+							);
+							axis.ticksBelowThreshold++;
+						}
 
-                    }
-                    //axis.transA *= (calculatedTickAmount - 1) / (tickAmount - 1);
-                    axis.min = tickPositions[0];
-                    axis.max = tickPositions[tickPositions.length - 1];
-                }
-            });
-        } else {
-            proceed.call(this);
-        }
+					}
+					//axis.transA *= (calculatedTickAmount - 1) / (tickAmount - 1);
+					axis.min = tickPositions[0];
+					axis.max = tickPositions[tickPositions.length - 1];
+				}
+			});
+		} else {
+			proceed.call(this);
+		}
 
-    })
+	})
 }(Highcharts));
 
 function defensive_indicator() {
@@ -633,7 +632,8 @@ function defensive_indicator() {
 	            tooltip: {
 	                valueSuffix: ' 次/年'
 	            },
-	            dashStyle: 'shortdot'
+	            dashStyle: 'shortdot',
+	            visible: false
 	        }, {
 	            name: '存貨營收比',
 	            type: 'spline',
@@ -646,7 +646,8 @@ function defensive_indicator() {
 	            tooltip: {
 	                valueSuffix: ' 季'
 	            },
-	            dashStyle: 'shortdot'
+	            dashStyle: 'shortdot',
+	            visible: false
 	        }]
 	    });
 		// HighChart程式碼結束位置
@@ -891,7 +892,8 @@ function profitable_indicator_1() {
 	            },
 	            tooltip: {
 	                valueSuffix: ' %'
-	            }
+	            },
+	            visible: false
 	        }]
 	    });
 		// HighChart程式碼結束位置
@@ -1014,8 +1016,8 @@ function profitable_indicator_2() {
 	            dashStyle: 'shortdot',
 	            tooltip: {
 	                valueSuffix: ' %'
-	            }
-
+	            },
+	            visible: false
 	        }]
 	    });
 		// HighChart程式碼結束位置
@@ -1133,7 +1135,8 @@ function stability_indicator() {
 	            data: data.earnings_per_share,
 	            tooltip: {
 	                valueSuffix: ' 元'
-	            }
+	            },
+	            visible: false
 	        }]
 	    });
 		// HighChart程式碼結束位置
@@ -1204,7 +1207,8 @@ function cashflow_indicator() {
 	            data: data.net_cash_flows_from_used_in_operating_activities,
 	            tooltip: {
 	                valueSuffix: ' 仟元'
-	            }
+	            },
+	            visible: false
 	        }, {
 	            name: '自由現金流量',
 	            type: 'area',

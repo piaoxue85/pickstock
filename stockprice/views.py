@@ -4,7 +4,7 @@
 import os
 import time
 from decimal import Decimal
-from datetime import date, datetime
+from datetime import date, datetime, timedelta
 import urllib, urllib2
 from urllib2 import URLError
 from bs4 import BeautifulSoup
@@ -142,7 +142,6 @@ def get_stockprice(request):
 	return render_to_response('msg_updateOK.html', {"table_name": "股價行情(月)"})
 
 def get_latest_stockprice(request):
-
 	# 如果要重建資料表的話，請將以下這段文字的註解拿掉
 	conn = sqlite3.connect(os.path.join(BASE_DIR, 'pickstock.db'))
 	conn.text_factory = str
@@ -160,9 +159,16 @@ def get_latest_stockprice(request):
 	# ============
 	#  上市股票
 	# ============
-	reportMonth = str(datetime.strftime(datetime.now(), "%Y%m"))
-	url = "http://www.twse.com.tw/ch/trading/exchange/MI_INDEX/genpage/Report{0}/A11220140815ALLBUT0999_1.php?select2=ALLBUT0999" \
-				.format(reportMonth)
+	# 決定上市行情的網址，如果日期是禮拜天就扣2天，是禮拜六就扣1天
+	if date.weekday(date.today()) == 0:
+		reportDate = str(date.strftime(date.today()-timedelta(days=2), "%Y%m%d"))
+	elif date.weekday(date.today()) == 6:
+		reportDate = str(date.strftime(date.today()-timedelta(days=1), "%Y%m%d"))
+	else:
+		reportDate = str(date.strftime(date.today(), "%Y%m%d"))
+	reportMonth = reportDate[0:6]
+	url = "http://www.twse.com.tw/ch/trading/exchange/MI_INDEX/genpage/Report{0}/A112{1}ALLBUT0999_1.php?select2=ALLBUT0999" \
+				.format(reportMonth, reportDate)
 	headers = {"User-Agent": "Mozilla/5.0"}
 	req = urllib2.Request(url, None, headers)
 	try:
@@ -183,7 +189,7 @@ def get_latest_stockprice(request):
 				price_table.p_close = float(string_to_decimal(tds[8].string.strip()))
 				price_table.market = "sii"
 				price_table.save()
-	response.close()
+		response.close()
 	print(u"上市股票當日行情更新完成.")
 	# ============
 	#  上櫃股票
@@ -208,7 +214,7 @@ def get_latest_stockprice(request):
 				price_table.p_close = float(otc_stock_price[i][2])
 				price_table.market = "otc"
 				price_table.save()
-	response.close()
+		response.close()
 	print(u"上櫃股票當日行情更新完成.")
 
 	end_time = datetime.now()

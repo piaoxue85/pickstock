@@ -731,7 +731,7 @@ function price_momentum_1() {
 			  		enabled: false
 				}
 		  	}, {
-				type: 'area',
+				type: 'column',
 				name: '年增率',
 				data: yoy,
 				tooltip: {
@@ -874,7 +874,7 @@ function price_momentum_2() {
 			  		enabled: false
 				}
 		  	}, {
-				type: 'area',
+				type: 'column',
 				name: '累積年增率',
 				data: acc_yoy,
 				tooltip: {
