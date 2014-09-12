@@ -150,19 +150,19 @@ def get_latest_stockprice(request):
 	conn.commit()
 	c.close()
 	conn.close()
-	print('old table has been cleaned.')
+	print(u"注意：舊的股票當日行情資料表已被刪除.")
 
 	start_time = datetime.now()
-	print("Updating Latest Stock Price Now.")
+	print(u"已經開始更新資料,約需10秒鐘.")
 
 	price_table = LatestStockPrice()
 	# ============
 	#  上市股票
 	# ============
 	# 決定上市行情的網址，如果日期是禮拜天就扣2天，是禮拜六就扣1天
-	if date.weekday(date.today()) == 0:
+	if date.weekday(date.today()) == 6:
 		reportDate = str(date.strftime(date.today()-timedelta(days=2), "%Y%m%d"))
-	elif date.weekday(date.today()) == 6:
+	elif date.weekday(date.today()) == 5:
 		reportDate = str(date.strftime(date.today()-timedelta(days=1), "%Y%m%d"))
 	else:
 		reportDate = str(date.strftime(date.today(), "%Y%m%d"))
