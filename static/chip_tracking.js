@@ -35,14 +35,33 @@ function bigchip_tracking() {
 					"<td style='text-align:center'>" + data.stock_low[i] + "</td>" +
 					// 收盤價
 					"<td style='text-align:center'>" + data.stock_close[i] + "</td>" +
-					// 大戶人數
+					// 大戶人數(1,000張以上)
 					"<td style='text-align:center'>" + number_format(data.bigchip_holders[i]) + "</td>" +
 					// 持有張數
 					"<td style='text-align:center'>" + number_format(data.bigchip_holdings[i]) + "</td>" +
 					// 持有比率
 					"<td style='text-align:center'>" + data.bigchip_percent[i] + "</td>" +
 					// 張數增減
-					"<td style='text-align:center'>" + number_format(data.bigchip_monthly_change[i]) + "</td></tr>"
+					"<td style='text-align:center'>" + number_format(data.bigchip_monthly_change[i]) + "</td>" +
+					// 大戶人數(800~1,000張)
+					"<td style='text-align:center'>" + number_format(data.bigchip_holders_2nd[i]) + "</td>" +
+					// 持有張數
+					"<td style='text-align:center'>" + number_format(data.bigchip_holdings_2nd[i]) + "</td>" +
+					// 持有比率
+					"<td style='text-align:center'>" + data.bigchip_percent_2nd[i] + "</td>" +
+					// 大戶人數(600~800張)
+					"<td style='text-align:center'>" + number_format(data.bigchip_holders_3rd[i]) + "</td>" +
+					// 持有張數
+					"<td style='text-align:center'>" + number_format(data.bigchip_holdings_3rd[i]) + "</td>" +
+					// 持有比率
+					"<td style='text-align:center'>" + data.bigchip_percent_3rd[i] + "</td>"+
+					// 大戶人數(小計)
+					"<td style='text-align:center'>" + number_format(data.bigchip_holders[i]+data.bigchip_holders_2nd[i]+data.bigchip_holders_3rd[i]) + "</td>" +
+					// 持有張數
+					"<td style='text-align:center'>" + number_format(data.bigchip_holdings[i]+data.bigchip_holdings_2nd[i]+data.bigchip_holdings_3rd[i]) + "</td>" +
+					// 持有比率
+					"<td style='text-align:center'>" + parseFloat(data.bigchip_percent[i]+data.bigchip_percent_2nd[i]+data.bigchip_percent_3rd[i]).toPrecision(4) + "</td></tr>"
+
 				);
 				i--;
 			});

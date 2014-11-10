@@ -1010,7 +1010,9 @@ def bigchip_tracking(request):
 		# 將需要使用的欄位從資料庫取出
 		stock_price = StockPrice.objects.filter(symbol=symbol).order_by('ID').values_list('ID', 'p_open', 'p_high', 'p_low', 'p_close')
 		chip_dist = ChipDistridution.objects.filter(symbol=symbol).order_by('ID').values_list('ID',
-			'bigchip_holders', 'bigchip_holdings', 'bigchip_percent', 'bigchip_monthly_change')
+			'bigchip_holders', 'bigchip_holdings', 'bigchip_percent', 'bigchip_monthly_change',
+			'bigchip_holders_2nd', 'bigchip_holdings_2nd', 'bigchip_percent_2nd',
+			'bigchip_holders_3rd', 'bigchip_holdings_3rd', 'bigchip_percent_3rd')
 		# 宣告json_data要使用的串列
 		stock_date = []
 		stock_open = []
@@ -1021,6 +1023,12 @@ def bigchip_tracking(request):
 		bigchip_holdings = []
 		bigchip_percent = []
 		bigchip_monthly_change = []
+		bigchip_holders_2nd = []
+		bigchip_holdings_2nd = []
+		bigchip_percent_2nd = []
+		bigchip_holders_3rd = []
+		bigchip_holdings_3rd = []
+		bigchip_percent_3rd = []
 		for i in range(len(stock_price)):
 			stock_date.append(str(stock_price[i][0][:6]))
 			stock_open.append(float(stock_price[i][1]))
@@ -1031,6 +1039,12 @@ def bigchip_tracking(request):
 			bigchip_holdings.append("")
 			bigchip_percent.append("")
 			bigchip_monthly_change.append("")
+			bigchip_holders_2nd.append("")
+			bigchip_holdings_2nd.append("")
+			bigchip_percent_2nd.append("")
+			bigchip_holders_3rd.append("")
+			bigchip_holdings_3rd.append("")
+			bigchip_percent_3rd.append("")
 			# 正常來說，股價資料應該會比籌碼資料新，所以用股價日期為準，將籌碼填入對應日期
 			for j in reversed(range(len(chip_dist))):
 				if stock_price[i][0] == chip_dist[j][0]:
@@ -1038,6 +1052,13 @@ def bigchip_tracking(request):
 					bigchip_holdings[i] = int(chip_dist[j][2]/1000)
 					bigchip_percent[i] = float(chip_dist[j][3])
 					bigchip_monthly_change[i] = int(chip_dist[j][4]/1000)
+					if chip_dist[j][5] != None:
+						bigchip_holders_2nd[i] = int(chip_dist[j][5])
+						bigchip_holdings_2nd[i] = int(chip_dist[j][6]/1000)
+						bigchip_percent_2nd[i] = float(chip_dist[j][7])
+						bigchip_holders_3rd[i] = int(chip_dist[j][8])
+						bigchip_holdings_3rd[i] = int(chip_dist[j][9]/1000)
+						bigchip_percent_3rd[i] = float(chip_dist[j][10])
 					break
 
 		# 只將最近5年的資料傳送給網頁使用
@@ -1050,7 +1071,13 @@ def bigchip_tracking(request):
 			"bigchip_holders": bigchip_holders[-60:],
 			"bigchip_holdings": bigchip_holdings[-60:],
 			"bigchip_percent": bigchip_percent[-60:],
-			"bigchip_monthly_change": bigchip_monthly_change[-60:]})
+			"bigchip_monthly_change": bigchip_monthly_change[-60:],
+			"bigchip_holders_2nd": bigchip_holders_2nd[-60:],
+			"bigchip_holdings_2nd": bigchip_holdings_2nd[-60:],
+			"bigchip_percent_2nd": bigchip_percent_2nd[-60:],
+			"bigchip_holders_3rd": bigchip_holders_3rd[-60:],
+			"bigchip_holdings_3rd": bigchip_holdings_3rd[-60:],
+			"bigchip_percent_3rd": bigchip_percent_3rd[-60:]})
 
 		return HttpResponse(data, mimetype="application/json")
 

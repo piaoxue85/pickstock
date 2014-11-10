@@ -49,7 +49,7 @@ def updatechip_bigchip(request):
 	month = [datetime.today().month-1, datetime.today().month]
 	day = [1,2,3]
 	# yr = 2014
-	# month = [8]
+	# month = [9]
 	# day = [1]
 	
 	for mth in month:
@@ -136,13 +136,27 @@ def updatechip_bigchip(request):
 									chip_distribution.bigchip_monthly_change = chip_distribution.bigchip_holdings - bigchip_holdings_premonth
 								else:
 									chip_distribution.bigchip_monthly_change = 0
+							elif r'800,001-1,000,000' in data.string.encode('utf-8'):
+								if data.next_sibling.next_sibling.string is not None:
+									chip_distribution.bigchip_holders_2nd = string_to_decimal(data.next_sibling.next_sibling.string)
+								if data.next_sibling.next_sibling.next_sibling.next_sibling.string is not None:
+									chip_distribution.bigchip_holdings_2nd = string_to_decimal(data.next_sibling.next_sibling.next_sibling.next_sibling.string)
+								if data.next_sibling.next_sibling.next_sibling.next_sibling.next_sibling.next_sibling.string is not None:
+									chip_distribution.bigchip_percent_2nd = string_to_decimal(data.next_sibling.next_sibling.next_sibling.next_sibling.next_sibling.next_sibling.string)
+							elif r'600,001-800,000' in data.string.encode('utf-8'):
+								if data.next_sibling.next_sibling.string is not None:
+									chip_distribution.bigchip_holders_3rd = string_to_decimal(data.next_sibling.next_sibling.string)
+								if data.next_sibling.next_sibling.next_sibling.next_sibling.string is not None:
+									chip_distribution.bigchip_holdings_3rd = string_to_decimal(data.next_sibling.next_sibling.next_sibling.next_sibling.string)
+								if data.next_sibling.next_sibling.next_sibling.next_sibling.next_sibling.next_sibling.string is not None:
+									chip_distribution.bigchip_percent_3rd = string_to_decimal(data.next_sibling.next_sibling.next_sibling.next_sibling.next_sibling.next_sibling.string)
 
 					if chip_distribution.bigchip_holders is not None:
 						chip_distribution.save()
 						print(symbol + " updated.(" + str(count) + "/" + str(countAll) + ", " + str(yr) + str(mth).zfill(2) + ") @ " + str(datetime.now()))
 					else:
 						print(symbol + " no data.(" + str(count) + "/" + str(countAll) + ", " + str(yr) + str(mth).zfill(2) + ")")
-			response.close()
+					response.close()
 	
 	end_time = datetime.now()
 	spent_time = end_time - start_time

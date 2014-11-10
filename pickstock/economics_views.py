@@ -1162,3 +1162,224 @@ def usa_economics_cboe_vix_index(request):
 		response.close()
 
 	return HttpResponse(data, mimetype="application/json")
+
+# ==============================
+#  *** 全球總體經濟指標追蹤 ***
+# ==============================
+# FRED官方api網站：https://api.stlouisfed.org/docs/fred/
+
+def world_economics_home(request):
+	return render_to_response('world_economics.html')
+observation_start_world = "2000-01-01"
+# -----------------------
+#  *** 美國GDP成長率 ***
+# -----------------------
+def world_real_gdp_usa(request):
+	series_id = "GDPC1"
+	units = "pca"
+	url = "http://api.stlouisfed.org/fred/series/observations?series_id={0}&api_key={1}&observation_start={2}&units={3}&file_type=json" \
+			.format(series_id, api_key, observation_start_world, units)
+	headers = {'User-Agent': 'Mozilla/5.0'}
+	req = urllib2.Request(url, None, headers)
+	try:
+		response = urllib2.urlopen(req)
+	except URLError, e:
+		if hasattr(e, "reason"):
+			print("Reason:"), e.reason
+		elif hasattr(e, "code"):
+			print("Error code:"), e.reason
+	else:
+		data = response.read()
+		response.close()
+
+	return HttpResponse(data, mimetype="application/json")
+# -----------------------
+#  *** 歐元區GDP成長率 ***
+# -----------------------
+def world_real_gdp_eurozone(request):
+	series_id = "NAEXKP01EZQ657S"
+	url = "http://api.stlouisfed.org/fred/series/observations?series_id={0}&api_key={1}&observation_start={2}&file_type=json" \
+			.format(series_id, api_key, observation_start_world)
+	headers = {'User-Agent': 'Mozilla/5.0'}
+	req = urllib2.Request(url, None, headers)
+	try:
+		response = urllib2.urlopen(req)
+	except URLError, e:
+		if hasattr(e, "reason"):
+			print("Reason:"), e.reason
+		elif hasattr(e, "code"):
+			print("Error code:"), e.reason
+	else:
+		data = response.read()
+		response.close()
+
+	return HttpResponse(data, mimetype="application/json")
+# -----------------------
+#  *** 中國GDP成長率 ***
+# -----------------------
+def world_real_gdp_china(request):
+	series_id = "CHNGDPNQDSMEI"
+	units = "pc1"
+	url = "http://api.stlouisfed.org/fred/series/observations?series_id={0}&api_key={1}&observation_start={2}&units={3}&file_type=json" \
+			.format(series_id, api_key, observation_start_world, units)
+	headers = {'User-Agent': 'Mozilla/5.0'}
+	req = urllib2.Request(url, None, headers)
+	try:
+		response = urllib2.urlopen(req)
+	except URLError, e:
+		if hasattr(e, "reason"):
+			print("Reason:"), e.reason
+		elif hasattr(e, "code"):
+			print("Error code:"), e.reason
+	else:
+		data = response.read()
+		response.close()
+
+	return HttpResponse(data, mimetype="application/json")
+# -----------------------
+#  *** 日本GDP成長率 ***
+# -----------------------
+def world_real_gdp_japan(request):
+	series_id = "NAEXKP01JPQ657S"
+	url = "http://api.stlouisfed.org/fred/series/observations?series_id={0}&api_key={1}&observation_start={2}&file_type=json" \
+			.format(series_id, api_key, observation_start_world)
+	headers = {'User-Agent': 'Mozilla/5.0'}
+	req = urllib2.Request(url, None, headers)
+	try:
+		response = urllib2.urlopen(req)
+	except URLError, e:
+		if hasattr(e, "reason"):
+			print("Reason:"), e.reason
+		elif hasattr(e, "code"):
+			print("Error code:"), e.reason
+	else:
+		data = response.read()
+		response.close()
+
+	return HttpResponse(data, mimetype="application/json")
+# -----------------------
+#  *** 德國GDP成長率 ***
+# -----------------------
+def world_real_gdp_germany(request):
+	series_id = "NAEXKP01DEQ657S"
+	url = "http://api.stlouisfed.org/fred/series/observations?series_id={0}&api_key={1}&observation_start={2}&file_type=json" \
+			.format(series_id, api_key, observation_start_world)
+	headers = {'User-Agent': 'Mozilla/5.0'}
+	req = urllib2.Request(url, None, headers)
+	try:
+		response = urllib2.urlopen(req)
+	except URLError, e:
+		if hasattr(e, "reason"):
+			print("Reason:"), e.reason
+		elif hasattr(e, "code"):
+			print("Error code:"), e.reason
+	else:
+		data = response.read()
+		response.close()
+
+	return HttpResponse(data, mimetype="application/json")
+# -----------------------
+#  *** 法國GDP成長率 ***
+# -----------------------
+def world_real_gdp_france(request):
+	series_id = "NAEXKP01FRQ657S"
+	url = "http://api.stlouisfed.org/fred/series/observations?series_id={0}&api_key={1}&observation_start={2}&file_type=json" \
+			.format(series_id, api_key, observation_start_world)
+	headers = {'User-Agent': 'Mozilla/5.0'}
+	req = urllib2.Request(url, None, headers)
+	try:
+		response = urllib2.urlopen(req)
+	except URLError, e:
+		if hasattr(e, "reason"):
+			print("Reason:"), e.reason
+		elif hasattr(e, "code"):
+			print("Error code:"), e.reason
+	else:
+		data = response.read()
+		response.close()
+
+	return HttpResponse(data, mimetype="application/json")
+# -----------------------
+#  *** 英國GDP成長率 ***
+# -----------------------
+def world_real_gdp_uk(request):
+	series_id = "NAEXKP01GBQ657S"
+	url = "http://api.stlouisfed.org/fred/series/observations?series_id={0}&api_key={1}&observation_start={2}&file_type=json" \
+			.format(series_id, api_key, observation_start_world)
+	headers = {'User-Agent': 'Mozilla/5.0'}
+	req = urllib2.Request(url, None, headers)
+	try:
+		response = urllib2.urlopen(req)
+	except URLError, e:
+		if hasattr(e, "reason"):
+			print("Reason:"), e.reason
+		elif hasattr(e, "code"):
+			print("Error code:"), e.reason
+	else:
+		data = response.read()
+		response.close()
+
+	return HttpResponse(data, mimetype="application/json")
+# -----------------------
+#  *** 巴西GDP成長率 ***
+# -----------------------
+def world_real_gdp_brazil(request):
+	series_id = "NAEXKP01BRQ657S"
+	url = "http://api.stlouisfed.org/fred/series/observations?series_id={0}&api_key={1}&observation_start={2}&file_type=json" \
+			.format(series_id, api_key, observation_start_world)
+	headers = {'User-Agent': 'Mozilla/5.0'}
+	req = urllib2.Request(url, None, headers)
+	try:
+		response = urllib2.urlopen(req)
+	except URLError, e:
+		if hasattr(e, "reason"):
+			print("Reason:"), e.reason
+		elif hasattr(e, "code"):
+			print("Error code:"), e.reason
+	else:
+		data = response.read()
+		response.close()
+
+	return HttpResponse(data, mimetype="application/json")
+# -----------------------
+#  *** 義大利GDP成長率 ***
+# -----------------------
+def world_real_gdp_italy(request):
+	series_id = "NAEXKP01ITQ657S"
+	url = "http://api.stlouisfed.org/fred/series/observations?series_id={0}&api_key={1}&observation_start={2}&file_type=json" \
+			.format(series_id, api_key, observation_start_world)
+	headers = {'User-Agent': 'Mozilla/5.0'}
+	req = urllib2.Request(url, None, headers)
+	try:
+		response = urllib2.urlopen(req)
+	except URLError, e:
+		if hasattr(e, "reason"):
+			print("Reason:"), e.reason
+		elif hasattr(e, "code"):
+			print("Error code:"), e.reason
+	else:
+		data = response.read()
+		response.close()
+
+	return HttpResponse(data, mimetype="application/json")
+# -----------------------
+#  *** 印度GDP成長率 ***
+# -----------------------
+def world_real_gdp_india(request):
+	series_id = "NAEXKP01INQ657S"
+	url = "http://api.stlouisfed.org/fred/series/observations?series_id={0}&api_key={1}&observation_start={2}&file_type=json" \
+			.format(series_id, api_key, observation_start_world)
+	headers = {'User-Agent': 'Mozilla/5.0'}
+	req = urllib2.Request(url, None, headers)
+	try:
+		response = urllib2.urlopen(req)
+	except URLError, e:
+		if hasattr(e, "reason"):
+			print("Reason:"), e.reason
+		elif hasattr(e, "code"):
+			print("Error code:"), e.reason
+	else:
+		data = response.read()
+		response.close()
+
+	return HttpResponse(data, mimetype="application/json")

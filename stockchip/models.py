@@ -21,6 +21,25 @@ class ChipDistridution(models.Model):
 	bigchip_percent = models.DecimalField(max_digits=20, decimal_places=2, null=True)
 	# 持股分級1,000張以上的單月變動股數
 	bigchip_monthly_change = models.DecimalField(max_digits=20, decimal_places=0, null=True)
+
+	# 持股分級800~1,000張以上的人數
+	bigchip_holders_2nd = models.DecimalField(max_digits=20, decimal_places=0, null=True)
+	# 持股分級800~1,000張以上的總持股股數
+	bigchip_holdings_2nd = models.DecimalField(max_digits=20, decimal_places=0, null=True)
+	# 持股分級800~1,000張以上佔集保庫存的比例
+	bigchip_percent_2nd = models.DecimalField(max_digits=20, decimal_places=2, null=True)
+	# 持股分級800~1,000張以上的單月變動股數
+	bigchip_monthly_change_2nd = models.DecimalField(max_digits=20, decimal_places=0, null=True)
+
+	# 持股分級600~800張以上的人數
+	bigchip_holders_3rd = models.DecimalField(max_digits=20, decimal_places=0, null=True)
+	# 持股分級600~800張以上的總持股股數
+	bigchip_holdings_3rd = models.DecimalField(max_digits=20, decimal_places=0, null=True)
+	# 持股分級600~800張以上佔集保庫存的比例
+	bigchip_percent_3rd = models.DecimalField(max_digits=20, decimal_places=2, null=True)
+	# 持股分級600~800張以上的單月變動股數
+	bigchip_monthly_change_3rd = models.DecimalField(max_digits=20, decimal_places=0, null=True)
+
 	modified_date = models.DateField(auto_now=True)
 
 	def __unicode__(self):

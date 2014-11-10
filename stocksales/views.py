@@ -29,9 +29,9 @@ else:
 	yr = datetime.today().year
 	month_start = datetime.today().month - 1
 	month_end = datetime.today().month
-# yr = 2013
-# month_start = 2
-# month_end = 3
+# yr = 2014
+# month_start = 10
+# month_end = 11
 
 def is_decimal(s):
     try:
@@ -118,7 +118,7 @@ def get_IFRS_sales(request):
 					print(mkt + " " + str(yr) + "-" + str(mth).zfill(2) + " updated. @ " + str(datetime.now()))
 				else:
 					print("WARNING! " + mkt + " " + str(yr) + "-" + str(mth).zfill(2) + " not update.")
-			response.close()
+				response.close()
 
 	end_time = datetime.now()
 	spent_time = end_time - start_time

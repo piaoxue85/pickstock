@@ -1,0 +1,59 @@
+{% extends "base_new.html" %}
+
+
+{% block content %}
+<!-- jQuery (necessary for Highchart & Bootstrap's JavaScript plugins) -->
+{% load staticfiles %}
+<script src="{% static "js/highstock-2.0.1/highstock.js" %}"></script>
+
+<!-- 標題 -->
+<div class="container" style="width:95%">
+	<div class="page-header">
+		<blockquote>
+			<h2><span class="glyphicon glyphicon-bullhorn"></span> 全球主要經濟體經濟指標追蹤</h2>
+			<footer>觀察世界主要經濟體的經濟指標，借以作為投資單一國家、區域ETF的參考。</footer>
+			<footer>資料來源：<a href="http://research.stlouisfed.org/fred2/" target="_blank">St. Louis Fed</a>, and <a href="https://api.stlouisfed.org/docs/fred/" target="_blank">FRED® API</a></footer>
+			
+		</blockquote>
+	</div>
+</div><!-- /標題 -->
+
+<!-- 切換頁籤 -->
+<div class="container" style="width:95%">
+	<ul class="nav nav-tabs">
+		<li class="active" id="world_economics_gdp"><a data-toggle="tab">GDP成長率</a></li>
+		<li id="#"><a data-toggle="tab">失業率</a></li>
+		<li id="#"><a data-toggle="tab">製造業時薪</a></li>
+		<li id="#"><a data-toggle="tab">貨幣供給</a></li>
+		<li id="#"><a data-toggle="tab">利率</a></li>
+		<li id="#"><a data-toggle="tab">核心通膨</a></li>
+		<li id="#"><a data-toggle="tab">物價指數</a></li>
+		<li id="#"><a data-toggle="tab">進/出口佔比</a></li>
+		<li id="#"><a data-toggle="tab">經常帳佔比</a></li>
+		<li id="#"><a data-toggle="tab">政府債務/赤字</a></li>
+		
+	</ul>
+</div><!-- /切換頁籤 -->
+
+<!-- Highchart圖表顯示區 -->
+<div class="container" id="chart" style="width:95%; height:360px;"></div>
+
+<!-- 表格顯示區 -->
+<div class="container" id="table" style="width:96%">
+	<div class="panel-body">
+		<table class="table table-hover table-condensed table-bordered table table-striped">
+			<thead id="world_economics_data_title">
+			</thead>
+			<tbody id="world_economics_data">
+			</tbody>
+		</table>
+	</div>
+</div><!-- /表格顯示區 -->
+
+{% endblock %}
+
+
+{% block footer %}
+	{% load staticfiles %}
+	<script src="{% static "world_economics.js" %}"></script>
+{% endblock %}
