@@ -73,7 +73,7 @@ def get_IFRS_sales(request):
 			monthly_sales.acc_sales = None
 			monthly_sales.acc_sales_yoy = None
 
-			url = 'http://newmops.tse.com.tw/t21/' + mkt + '/t21sc03_' + str(yr-1911) + '_' + str(mth) + '.html'
+			url = 'http://newmops.tse.com.tw/nas/t21/' + mkt + '/t21sc03_' + str(yr-1911) + '_' + str(mth) + '.html'
 			headers = {'User-Agent': 'Mozilla/5.0'}
 			req = urllib2.Request(url, None, headers)
 			try:
