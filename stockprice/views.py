@@ -52,7 +52,7 @@ def get_stockprice(request):
 	else:
 		begin = date(datetime.today().year, datetime.today().month - 2, 1)
 	end = datetime.today()
-	# begin = date(2014, 7, 1)
+	# begin = date(2014, 12, 1)
 	# end = datetime.today()
 
 	reutersid = ''
@@ -167,8 +167,12 @@ def get_latest_stockprice(request):
 	else:
 		reportDate = str(date.strftime(date.today(), "%Y%m%d"))
 	reportMonth = reportDate[0:6]
-	url = "http://www.twse.com.tw/ch/trading/exchange/MI_INDEX/genpage/Report{0}/A112{1}ALLBUT0999_1.php?select2=ALLBUT0999" \
-				.format(reportMonth, reportDate)
+
+	# url = "http://www.twse.com.tw/ch/trading/exchange/MI_INDEX/genpage/Report{0}/A112{1}ALLBUT0999_1.php?select2=ALLBUT0999" \
+	# 			.format(reportMonth, reportDate)
+	url = "http://www.twse.com.tw/ch/trading/exchange/MI_INDEX/MI_INDEX.php?download=&qdate={0}%2F{1}%2F{2}&selectType=ALLBUT0999" \
+			.format(str(int(reportDate[0:4])-2011), reportDate[5:6], reportDate[7:8])
+
 	headers = {"User-Agent": "Mozilla/5.0"}
 	req = urllib2.Request(url, None, headers)
 	try:
@@ -180,8 +184,11 @@ def get_latest_stockprice(request):
 			print("Error code:"), e.reason
 	else:
 		soup = BeautifulSoup(response, from_encoding = "utf-8")
-		tbl = soup.find("table", attrs = {"width":"1000", "border":"0"})
-		trs = tbl.find_all("tr", attrs = {"bgcolor":"#FFFFFF"})
+		# tbl = soup.find("table", attrs = {"width":"1000", "border":"0"})
+		# trs = tbl.find_all("tr", attrs = {"bgcolor":"#FFFFFF"})
+		tbl = soup.find("table", style="width:1500px;")
+		tbdy = tbl.find("tbody")
+		trs = tbdy.find_all("tr")
 		for tr in trs:
 			tds = tr.find_all("td")
 			if "-" not in tds[8].string:

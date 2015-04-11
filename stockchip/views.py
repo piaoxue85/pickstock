@@ -45,17 +45,23 @@ def updatechip_bigchip(request):
 	print("Updating Stock Chips Now.")
 
 	# 自動/手動設定查詢的日期(自動設定為最近2個月)
-	yr = datetime.today().year
-	month = [datetime.today().month-1, datetime.today().month]
-	day = [1,2,3]
-	# yr = 2014
-	# month = [9]
-	# day = [1]
+	if datetime.today().month == 1:
+		yr = datetime.today().year
+		month = [datetime.today().month]
+		day = [5]
+	else:
+		yr = datetime.today().year
+		month = [datetime.today().month-1, datetime.today().month]
+		day = [1,2,3]
+	# yr = 2015
+	# month = [3]
+	# day = [2]
 	
 	for mth in month:
 		chip_distribution = ChipDistridution()
 		count = 0
 		stocks = StockID.objects.all()[count:]
+
 		countAll = stocks.count() # 計算全部需要更新的股票檔數
 
 		for stock in stocks:

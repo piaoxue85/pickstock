@@ -128,29 +128,27 @@ def earnings_payout(request):
 	# print('old table has been cleaned.')
 
 	# # 輸入西元年(時間參數改由最外層控制)
-	# yr = 2014
+	# yr = 2015
 
 	start_time = datetime.now()
 
 	market = ["sii", "otc"]
-	print("Updating Earnings Payout Now.")
+	print("Updating " + str(yr) + " Earnings Payout Now.")
 
 	# prepare to write new data
 	for mkt in market:
 		# 公開資訊觀測站－彙總報表－股東會及股利－股利分派情形
-		url = "http://newmops.tse.com.tw/server-java/t05st09sub"
-		values = {"step": "1", "TYPEK": mkt, "YEAR": str(yr-1911), "first": ""}
-		url_data = urllib.urlencode(values)
-		headers = {"User-Agent": "Mozilla/5.0"}
-		req = urllib2.Request(url, url_data, headers)
+		url = ("http://mops.twse.com.tw/server-java/t05st09sub?step={0}&TYPEK={1}&YEAR={2}&first=").format(1, mkt, yr-1911)
+		# print(url)
+
 		# 先確認網站連線是否正常，沒有錯誤發生；若有，則進行異常處理
 		try:
-			response = urllib2.urlopen(req)
+			response = urllib2.urlopen(url)
 		except URLError, e:
 			if hasattr(e, "reason"):
-				print(yr + ". Reason:"), e.reason
+				print(str(yr) + ". Reason:"), e.reason
 			elif hasattr(e, "code"):
-				print(yr + ". Error code:"), e.reason
+				print(str(yr) + ". Error code:"), e.reason
 		else:
 			html = response.read()
 			soup = BeautifulSoup(html.decode('cp950', 'ignore').encode('utf-8'))

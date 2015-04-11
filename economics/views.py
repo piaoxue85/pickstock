@@ -74,9 +74,9 @@ def tw_indicators(request):
 		response = urllib2.urlopen(req)
 	except URLError, e:
 		if hasattr(e, "reason"):
-			print(stock.symbol + "(" + str(count) + '/' + str(countAll) + "). Reason:"), e.reason
+			print("Reason:"), e.reason
 		elif hasattr(e, "code"):
-			print(stock.symbol + "(" + str(count) + '/' + str(countAll) + "). Error code:"), e.reason
+			print("Error code:"), e.reason
 	else:
 		soup = BeautifulSoup(response, from_encoding = 'utf-8')
 		tbl = soup.find('table', attrs = {'width':'100%', 'border':'0'}, class_='yfnc_datamodoutline1')
@@ -111,69 +111,71 @@ def tw_indicators(request):
 		response.close()
 		print("TWSE Index updated!")
 
+	# 由於國發會的景氣指標網站改版，這一部分的程式還需要花時間修改
+	
 	# STEP.2:接著先連結資料庫，然後將查詢到的對策信號分數和領先指標分數用update的方式更新到資料庫
-	conn = sqlite3.connect(os.path.join(BASE_DIR, 'pickstock.db'))
-	conn.text_factory = str
-	c = conn.cursor()
-	# 景氣指標查詢系統的網址（對策信號分數和領先指標分數）
-	url = "http://index.ndc.gov.tw/Result.aspx?lang=1&type=it01&p=1^1^" + date_str + "^3,^,,^SR0001,SR0005,^"
-	headers = {'User-Agent': 'Mozilla/5.0'}
-	req = urllib2.Request(url, None, headers)
-	try:
-		response = urllib2.urlopen(req)
-	except URLError, e:
-		if hasattr(e, "reason"):
-			print(symbol + "(" + str(count) + '/' + str(countAll) + "). Reason:"), e.reason
-		elif hasattr(e, "code"):
-			print(symbol + "(" + str(count) + '/' + str(countAll) + "). Error code:"), e.reason
-	else:
-		soup = BeautifulSoup(response, from_encoding = 'utf-8')
-		table = soup.find("table", id="ctl00_ContentPlaceHolder1_TbeObject")
-		trs = table.find_all("tr")
-		for i in range(2,len(trs)-1):
-			tds = trs[i].find_all("td", style="white-space:nowrap;")
-			data_date = tds[0].string.strip()[0:4] + tds[0].string.strip()[5:7]
-			monitoring_indicator = tds[3].string.strip()
-			composite_leading_index = tds[1].string.strip()
-			composite_leading_index_yoy = tds[2].find("font", color="#FF003C").string.strip()
-			c.execute('UPDATE economics_taiwaneconomicsindicator SET monitoring_indicator = ?, composite_leading_index = ?, composite_leading_index_yoy = ? \
-				WHERE date = ?', (monitoring_indicator, composite_leading_index, composite_leading_index_yoy, data_date))
-		conn.commit()
-	c.close()
-	conn.close()
-	response.close()
-	print("TW indicators updated!")
+	# conn = sqlite3.connect(os.path.join(BASE_DIR, 'pickstock.db'))
+	# conn.text_factory = str
+	# c = conn.cursor()
+	# # 景氣指標查詢系統的網址（對策信號分數和領先指標分數）
+	# url = "http://index.ndc.gov.tw/Result.aspx?lang=1&type=it01&p=1^1^" + date_str + "^3,^,,^SR0001,SR0005,^"
+	# headers = {'User-Agent': 'Mozilla/5.0'}
+	# req = urllib2.Request(url, None, headers)
+	# try:
+	# 	response = urllib2.urlopen(req)
+	# except URLError, e:
+	# 	if hasattr(e, "reason"):
+	# 		print(symbol + "(" + str(count) + '/' + str(countAll) + "). Reason:"), e.reason
+	# 	elif hasattr(e, "code"):
+	# 		print(symbol + "(" + str(count) + '/' + str(countAll) + "). Error code:"), e.reason
+	# else:
+	# 	soup = BeautifulSoup(response, from_encoding = 'utf-8')
+	# 	table = soup.find("table", id="ctl00_ContentPlaceHolder1_TbeObject")
+	# 	trs = table.find_all("tr")
+	# 	for i in range(2,len(trs)-1):
+	# 		tds = trs[i].find_all("td", style="white-space:nowrap;")
+	# 		data_date = tds[0].string.strip()[0:4] + tds[0].string.strip()[5:7]
+	# 		monitoring_indicator = tds[3].string.strip()
+	# 		composite_leading_index = tds[1].string.strip()
+	# 		composite_leading_index_yoy = tds[2].find("font", color="#FF003C").string.strip()
+	# 		c.execute('UPDATE economics_taiwaneconomicsindicator SET monitoring_indicator = ?, composite_leading_index = ?, composite_leading_index_yoy = ? \
+	# 			WHERE date = ?', (monitoring_indicator, composite_leading_index, composite_leading_index_yoy, data_date))
+	# 	conn.commit()
+	# c.close()
+	# conn.close()
+	# response.close()
+	# print("TW indicators updated!")
 
-	# STEP.3:一樣先連結資料庫，然後將查詢到的M1B資料用update的方式更新到資料庫裡
-	conn = sqlite3.connect(os.path.join(BASE_DIR, 'pickstock.db'))
-	conn.text_factory = str
-	c = conn.cursor()
-	# 景氣指標查詢系統的網址（M1B）
-	url = "http://index.ndc.gov.tw/Result.aspx?lang=1&type=it03&p=1^1^" + date_str + "^3,^,,^SR0008,^"
-	headers = {'User-Agent': 'Mozilla/5.0'}
-	req = urllib2.Request(url, None, headers)
-	try:
-		response = urllib2.urlopen(req)
-	except URLError, e:
-		if hasattr(e, "reason"):
-			print(symbol + "(" + str(count) + '/' + str(countAll) + "). Reason:"), e.reason
-		elif hasattr(e, "code"):
-			print(symbol + "(" + str(count) + '/' + str(countAll) + "). Error code:"), e.reason
-	else:
-		soup = BeautifulSoup(response, from_encoding = 'utf-8')
-		table = soup.find("table", id="ctl00_ContentPlaceHolder1_TbeObject")
-		trs = table.find_all("tr")
-		for i in range(2,len(trs)-1):
-			tds = trs[i].find_all("td", style="white-space:nowrap;")
-			data_date = tds[0].string.strip()[0:4] + tds[0].string.strip()[5:7]
-			monetary_aggregates_M1B = tds[1].string.strip().replace(',', '')
-			monetary_aggregates_M1B_yoy = tds[2].find("font", color="#FF003C").string.strip()
-			c.execute('UPDATE economics_taiwaneconomicsindicator SET monetary_aggregates_M1B = ?, monetary_aggregates_M1B_yoy = ? WHERE date = ?', (monetary_aggregates_M1B, monetary_aggregates_M1B_yoy, data_date))
-		conn.commit()
-	c.close()
-	conn.close()
-	response.close()
-	print("M1B and YoY updated!")
+	# # STEP.3:一樣先連結資料庫，然後將查詢到的M1B資料用update的方式更新到資料庫裡
+	# conn = sqlite3.connect(os.path.join(BASE_DIR, 'pickstock.db'))
+	# conn.text_factory = str
+	# c = conn.cursor()
+	# # 景氣指標查詢系統的網址（M1B）
+	# url = "http://index.ndc.gov.tw/Result.aspx?lang=1&type=it03&p=1^1^" + date_str + "^3,^,,^SR0008,^"
+	# headers = {'User-Agent': 'Mozilla/5.0'}
+	# req = urllib2.Request(url, None, headers)
+	# try:
+	# 	response = urllib2.urlopen(req)
+	# except URLError, e:
+	# 	if hasattr(e, "reason"):
+	# 		print(symbol + "(" + str(count) + '/' + str(countAll) + "). Reason:"), e.reason
+	# 	elif hasattr(e, "code"):
+	# 		print(symbol + "(" + str(count) + '/' + str(countAll) + "). Error code:"), e.reason
+	# else:
+	# 	soup = BeautifulSoup(response, from_encoding = 'utf-8')
+	# 	table = soup.find("table", id="ctl00_ContentPlaceHolder1_TbeObject")
+	# 	trs = table.find_all("tr")
+	# 	for i in range(2,len(trs)-1):
+	# 		tds = trs[i].find_all("td", style="white-space:nowrap;")
+	# 		data_date = tds[0].string.strip()[0:4] + tds[0].string.strip()[5:7]
+	# 		monetary_aggregates_M1B = tds[1].string.strip().replace(',', '')
+	# 		monetary_aggregates_M1B_yoy = tds[2].find("font", color="#FF003C").string.strip()
+	# 		c.execute('UPDATE economics_taiwaneconomicsindicator SET monetary_aggregates_M1B = ?, monetary_aggregates_M1B_yoy = ? WHERE date = ?', (monetary_aggregates_M1B, monetary_aggregates_M1B_yoy, data_date))
+	# 	conn.commit()
+	# c.close()
+	# conn.close()
+	# response.close()
+	# print("M1B and YoY updated!")
 	
 	end_time = datetime.now()
 	spent_time = end_time - start_time

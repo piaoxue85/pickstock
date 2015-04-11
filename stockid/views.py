@@ -30,7 +30,9 @@ def get_stockid(request):
 	print("Updating Stock ID Now.")
 
 	# prepare to write new data
-	market=[2,4] #'2':sii，'4':otc
+
+	market=[2, 4] #'2':sii，'4':otc
+	
 	for mkt in market:
 		url = "http://isin.twse.com.tw/isin/C_public.jsp?strMode=" + str(mkt)
 		headers = {'User-Agent': 'Mozilla/5.0'}
@@ -56,8 +58,10 @@ def get_stockid(request):
 				id_table.industry = None
 				if len(tds) == 7:
 					if tds[5].string == "ESVUFR":
-						id_table.symbol = tds[0].string[:8].strip()
-						id_table.cname = tds[0].string[10:].strip()
+						id_table.symbol = tds[0].string[:4].strip()
+						# print(id_table.symbol)
+						id_table.cname = tds[0].string[5:].strip()
+						# print(id_table.cname)
 						id_table.issuedate = datetime.strftime(
 							datetime.strptime(tds[2].string.strip(), '%Y/%m/%d'),
 							 '%Y-%m-%d')
@@ -69,6 +73,7 @@ def get_stockid(request):
 				# 確定股票資料存在才儲存到資料庫
 				if id_table.symbol is not None:
 					id_table.save()
+
 			if mkt == 2:
 				print("sii updated. " + "@ " + str(datetime.now()))
 			elif mkt == 4:
